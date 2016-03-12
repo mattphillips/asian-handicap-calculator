@@ -1,0 +1,9 @@
+apply plugin: 'com.android.library'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
