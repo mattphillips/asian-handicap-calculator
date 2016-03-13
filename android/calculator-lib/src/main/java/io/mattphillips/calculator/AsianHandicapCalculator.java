@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 
 import io.mattphillips.models.Bet;
 import io.mattphillips.models.Outcome;
+import io.mattphillips.models.Result;
 import io.mattphillips.models.Team;
+import io.mattphillips.models.microtypes.Handicap;
 
 public abstract class AsianHandicapCalculator {
 
@@ -24,7 +26,7 @@ public abstract class AsianHandicapCalculator {
     // Quarter Goal +-(1.25, 1.75, 2.25, 2.75, 3.25, 3.75, 4.25, 4.75)
     public static AsianHandicapCalculator determineBetType(Bet bet) throws Exception {
 
-        String rem = bet.getHandicap().remainder(BigDecimal.ONE).toString();
+        String rem = bet.getHandicap().getRemainder().toString();
 
         if (rem.equals("0.00"))
             return new FullGoalCalculator(bet);
@@ -43,5 +45,14 @@ public abstract class AsianHandicapCalculator {
 
     protected BigDecimal calculateGoalSupremacy(int backedTeam, int opposingTeam) {
         return new BigDecimal(backedTeam).subtract(new BigDecimal(opposingTeam));
+    }
+
+    protected Result determineResult(BigDecimal goalSupremacy, Handicap handicap) {
+        if (goalSupremacy.add(handicap.getValue()).compareTo(BigDecimal.ZERO) > 0)
+            return Result.WIN;
+        else if (goalSupremacy.add(handicap.getValue()).compareTo(BigDecimal.ZERO) < 0)
+            return Result.LOSE;
+        else
+            return Result.DRAW;
     }
 }

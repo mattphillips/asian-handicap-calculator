@@ -2,19 +2,23 @@ package io.mattphillips.models;
 
 import java.math.BigDecimal;
 
+import io.mattphillips.models.microtypes.Handicap;
+import io.mattphillips.models.microtypes.Odds;
+import io.mattphillips.models.microtypes.Stake;
+
 public class Bet {
 
     private final Team team;
-    private final BigDecimal odds;
-    private final BigDecimal handicap;
-    private final BigDecimal stake;
+    private final Odds odds;
+    private final Handicap handicap;
+    private final Stake stake;
     private final Score scoreline;
 
     public Bet(
             final Team team,
-            final BigDecimal odds,
-            final BigDecimal handicap,
-            final BigDecimal stake,
+            final Odds odds,
+            final Handicap handicap,
+            final Stake stake,
             final Score scoreline) {
         this.team = team;
         this.odds = odds;
@@ -27,15 +31,15 @@ public class Bet {
         return team;
     }
 
-    public BigDecimal getOdds() {
+    public Odds getOdds() {
         return odds;
     }
 
-    public BigDecimal getHandicap() {
+    public Handicap getHandicap() {
         return handicap;
     }
 
-    public BigDecimal getStake() {
+    public Stake getStake() {
         return stake;
     }
 

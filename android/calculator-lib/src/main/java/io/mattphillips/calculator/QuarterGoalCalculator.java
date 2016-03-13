@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 import io.mattphillips.models.Bet;
 import io.mattphillips.models.Outcome;
 import io.mattphillips.models.Result;
+import io.mattphillips.models.microtypes.Handicap;
+import io.mattphillips.models.microtypes.Payout;
+import io.mattphillips.models.microtypes.Profit;
+import io.mattphillips.models.microtypes.Stake;
 
 public class QuarterGoalCalculator extends AsianHandicapCalculator {
 
@@ -15,28 +19,27 @@ public class QuarterGoalCalculator extends AsianHandicapCalculator {
     }
 
     public Outcome calculate() {
-        BigDecimal rem = bet.getHandicap().remainder(BigDecimal.ONE);
-        Outcome fullGoal = new FullGoalCalculator(buildFullGoalBet(rem)).calculate();
-        Outcome halfGoal = new HalfGoalCalculator(buildHalfGoalBet(rem)).calculate();
+        Outcome fullGoal = new FullGoalCalculator(buildFullGoalBet()).calculate();
+        Outcome halfGoal = new HalfGoalCalculator(buildHalfGoalBet()).calculate();
 
         return combineOutcomes(fullGoal, halfGoal);
     }
 
-    private Bet buildFullGoalBet(BigDecimal remainder) {
+    private Bet buildFullGoalBet() {
         return new Bet(
                 bet.getTeam(),
                 bet.getOdds(),
-                roundFullGoalHandicap(remainder),
+                new Handicap(roundFullGoalHandicap(bet.getHandicap().getRemainder())),
                 splitStake(bet.getStake()),
                 bet.getScoreline()
         );
     }
 
-    private Bet buildHalfGoalBet(BigDecimal remainder) {
+    private Bet buildHalfGoalBet() {
         return new Bet(
                 bet.getTeam(),
                 bet.getOdds(),
-                roundHalfGoalHandicap(remainder),
+                new Handicap(roundHalfGoalHandicap(bet.getHandicap().getRemainder())),
                 splitStake(bet.getStake()),
                 bet.getScoreline()
         );
@@ -55,34 +58,44 @@ public class QuarterGoalCalculator extends AsianHandicapCalculator {
     }
 
     private BigDecimal roundFullGoalPositiveAndHalfGoalNegativeHandicaps(BigDecimal rem) {
+        BigDecimal handicap = bet.getHandicap().getValue();
         return rem.equals(QUARTER_HANDICAP_OFFSET)
-                ? bet.getHandicap().subtract(QUARTER_HANDICAP_OFFSET)
-                : bet.getHandicap().add(QUARTER_HANDICAP_OFFSET);
+                ? handicap.subtract(QUARTER_HANDICAP_OFFSET)
+                : handicap.add(QUARTER_HANDICAP_OFFSET);
     }
 
     private BigDecimal roundFullGoalNegativeAndHalfGoalPositiveHandicaps(BigDecimal rem) {
+        BigDecimal handicap = bet.getHandicap().getValue();
         return rem.equals(QUARTER_HANDICAP_OFFSET)
-                ? bet.getHandicap().add(QUARTER_HANDICAP_OFFSET)
-                : bet.getHandicap().subtract(QUARTER_HANDICAP_OFFSET);
+                ? handicap.add(QUARTER_HANDICAP_OFFSET)
+                : handicap.subtract(QUARTER_HANDICAP_OFFSET);
     }
 
-    private BigDecimal splitStake(BigDecimal stake) {
-        return stake.divide(new BigDecimal(2.00)).setScale(2, 0);
+    private Stake splitStake(Stake stake) {
+        return new Stake(stake.getValue().divide(new BigDecimal(2.00)).setScale(2, 0));
     }
 
     private Outcome combineOutcomes(Outcome fullGoal, Outcome halfGoal) {
-        BigDecimal profit = fullGoal.getProfit().add(halfGoal.getProfit());
+        Profit profit = sumProfit(fullGoal.getProfit(), halfGoal.getProfit());
         return new Outcome(
                 determineResultFromOutcomeProfits(profit),
-                fullGoal.getPayout().add(halfGoal.getPayout()),
+                sumPayout(fullGoal.getPayout(), halfGoal.getPayout()),
                 profit
         );
     }
 
-    private Result determineResultFromOutcomeProfits(BigDecimal profit) {
-        if (profit.compareTo(BigDecimal.ZERO) > 0)
+    private Profit sumProfit(Profit fullGoal, Profit halfGoal) {
+        return new Profit(fullGoal.getValue().add(halfGoal.getValue()));
+    }
+
+    private Payout sumPayout(Payout fullGoal, Payout halfGoal) {
+        return new Payout(fullGoal.getValue().add(halfGoal.getValue()));
+    }
+
+    private Result determineResultFromOutcomeProfits(Profit profit) {
+        if (profit.getValue().compareTo(BigDecimal.ZERO) > 0)
             return Result.WIN;
-        else if(profit.compareTo(BigDecimal.ZERO) < 0)
+        else if(profit.getValue().compareTo(BigDecimal.ZERO) < 0)
             return Result.LOSE;
         else
             return Result.DRAW;

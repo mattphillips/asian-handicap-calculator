@@ -2,14 +2,14 @@ package io.mattphillips.calculator;
 
 import org.junit.Test;
 
-import java.math.BigDecimal;
-
 import io.mattphillips.models.Bet;
 import io.mattphillips.models.Outcome;
 import io.mattphillips.models.Score;
 import io.mattphillips.models.Team;
+import io.mattphillips.models.microtypes.Handicap;
+import io.mattphillips.models.microtypes.Odds;
+import io.mattphillips.models.microtypes.Stake;
 
-import static io.mattphillips.models.Result.DRAW;
 import static io.mattphillips.models.Result.LOSE;
 import static io.mattphillips.models.Result.WIN;
 import static io.mattphillips.models.Team.AWAY;
@@ -78,21 +78,21 @@ public class HalfGoalCalculatorTest {
     public void shouldCalculatePayoutAndProfitCorrectly() throws Exception {
         Outcome winOutcome = calculateBetWithTeamAndScore("0.50", HOME, new Score(0, 0));
         assertThat(winOutcome.getResult()).isEqualTo(WIN);
-        assertThat(winOutcome.getPayout().toString()).isEqualTo("200.00");
-        assertThat(winOutcome.getProfit().toString()).isEqualTo("100.00");
+        assertThat(winOutcome.getPayout().getValue().toString()).isEqualTo("200.00");
+        assertThat(winOutcome.getProfit().getValue().toString()).isEqualTo("100.00");
 
         Outcome loseOutcome = calculateBetWithTeamAndScore("0.50", HOME, new Score(0, 1));
         assertThat(loseOutcome.getResult()).isEqualTo(LOSE);
-        assertThat(loseOutcome.getPayout().toString()).isEqualTo("0.00");
-        assertThat(loseOutcome.getProfit().toString()).isEqualTo("-100.00");
+        assertThat(loseOutcome.getPayout().getValue().toString()).isEqualTo("0.00");
+        assertThat(loseOutcome.getProfit().getValue().toString()).isEqualTo("-100.00");
     }
 
     private Outcome calculateBetWithTeamAndScore(String handicap, Team backedTeam, Score score) throws Exception {
         return new HalfGoalCalculator(
                 new Bet(backedTeam,
-                        new BigDecimal(2.00),
-                        new BigDecimal(handicap),
-                        new BigDecimal(100.00),
+                        new Odds("2.00"),
+                        new Handicap(handicap),
+                        new Stake("100.00"),
                         score)).calculate();
     }
 }

@@ -2,13 +2,16 @@ package io.mattphillips.models;
 
 import java.math.BigDecimal;
 
+import io.mattphillips.models.microtypes.Payout;
+import io.mattphillips.models.microtypes.Profit;
+
 public class Outcome {
 
     private final Result result;
-    private final BigDecimal payout;
-    private final BigDecimal profit;
+    private final Payout payout;
+    private final Profit profit;
 
-    public Outcome(final Result result, final BigDecimal payout, final BigDecimal profit) {
+    public Outcome(final Result result, final Payout payout, final Profit profit) {
         this.result = result;
         this.payout = payout;
         this.profit = profit;
@@ -18,11 +21,11 @@ public class Outcome {
         return result;
     }
 
-    public BigDecimal getPayout() {
+    public Payout getPayout() {
         return payout;
     }
 
-    public BigDecimal getProfit() {
+    public Profit getProfit() {
         return profit;
     }
 
