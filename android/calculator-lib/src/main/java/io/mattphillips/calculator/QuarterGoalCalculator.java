@@ -13,6 +13,7 @@ import io.mattphillips.models.microtypes.Stake;
 public class QuarterGoalCalculator extends AsianHandicapCalculator {
 
     private static final BigDecimal QUARTER_HANDICAP_OFFSET = new BigDecimal(0.25);
+    private static final BigDecimal HALF = new BigDecimal(2.00);
 
     public QuarterGoalCalculator(final Bet bet) {
         super(bet);
@@ -26,35 +27,35 @@ public class QuarterGoalCalculator extends AsianHandicapCalculator {
     }
 
     private Bet buildFullGoalBet() {
-        return new Bet(
-                bet.getTeam(),
-                bet.getOdds(),
-                new Handicap(roundFullGoalHandicap(bet.getHandicap().getRemainder())),
-                splitStake(bet.getStake()),
-                bet.getScoreline()
-        );
+        return buildBet(roundFullGoalHandicap(bet.getHandicap().getRemainder()));
     }
 
     private Bet buildHalfGoalBet() {
+        return buildBet(roundHalfGoalHandicap(bet.getHandicap().getRemainder()));
+    }
+
+    private Bet buildBet(Handicap handicap) {
         return new Bet(
                 bet.getTeam(),
                 bet.getOdds(),
-                new Handicap(roundHalfGoalHandicap(bet.getHandicap().getRemainder())),
+                handicap,
                 splitStake(bet.getStake()),
                 bet.getScoreline()
         );
     }
 
-    protected BigDecimal roundFullGoalHandicap(BigDecimal remainder) {
-        return remainder.signum() == 1
+    protected Handicap roundFullGoalHandicap(BigDecimal remainder) {
+        BigDecimal roundedHandicap = remainder.signum() == 1
                 ? roundFullGoalPositiveAndHalfGoalNegativeHandicaps(remainder)
                 : roundFullGoalNegativeAndHalfGoalPositiveHandicaps(remainder.negate());
+        return new Handicap(roundedHandicap);
     }
 
-    protected BigDecimal roundHalfGoalHandicap(BigDecimal remainder) {
-        return remainder.signum() == 1
+    protected Handicap roundHalfGoalHandicap(BigDecimal remainder) {
+        BigDecimal roundedHandicap = remainder.signum() == 1
                 ? roundFullGoalNegativeAndHalfGoalPositiveHandicaps(remainder)
                 : roundFullGoalPositiveAndHalfGoalNegativeHandicaps(remainder.negate());
+        return new Handicap(roundedHandicap);
     }
 
     private BigDecimal roundFullGoalPositiveAndHalfGoalNegativeHandicaps(BigDecimal rem) {
@@ -72,7 +73,7 @@ public class QuarterGoalCalculator extends AsianHandicapCalculator {
     }
 
     private Stake splitStake(Stake stake) {
-        return new Stake(stake.getValue().divide(new BigDecimal(2.00)).setScale(2, 0));
+        return new Stake(stake.getValue().divide(HALF));
     }
 
     private Outcome combineOutcomes(Outcome fullGoal, Outcome halfGoal) {

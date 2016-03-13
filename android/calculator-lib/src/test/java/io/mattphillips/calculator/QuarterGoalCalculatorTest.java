@@ -66,38 +66,38 @@ public class QuarterGoalCalculatorTest {
     public void shouldCorrectlyRoundFullGoalHandicap() throws Exception {
         Bet bet = getBet("-0.75");
         QuarterGoalCalculator calculator = new QuarterGoalCalculator(bet);
-        assertThat(calculator.roundFullGoalHandicap(getHandicapRemainder(bet.getHandicap().getValue())).toString()).isEqualTo("-1.00");
+        assertThat(calculator.roundFullGoalHandicap(bet.getHandicap().getRemainder()).getValue().toString()).isEqualTo("-1.00");
 
         bet = getBet("-0.25");
         calculator = new QuarterGoalCalculator(bet);
-        assertThat(calculator.roundFullGoalHandicap(getHandicapRemainder(bet.getHandicap().getValue())).toString()).isEqualTo("0.00");
+        assertThat(calculator.roundFullGoalHandicap(bet.getHandicap().getRemainder()).getValue().toString()).isEqualTo("0.00");
 
         bet = getBet("0.75");
         calculator = new QuarterGoalCalculator(bet);
-        assertThat(calculator.roundFullGoalHandicap(getHandicapRemainder(bet.getHandicap().getValue())).toString()).isEqualTo("1.00");
+        assertThat(calculator.roundFullGoalHandicap(bet.getHandicap().getRemainder()).getValue().toString()).isEqualTo("1.00");
 
         bet = getBet("0.25");
         calculator = new QuarterGoalCalculator(bet);
-        assertThat(calculator.roundFullGoalHandicap(getHandicapRemainder(bet.getHandicap().getValue())).toString()).isEqualTo("0.00");
+        assertThat(calculator.roundFullGoalHandicap(bet.getHandicap().getRemainder()).getValue().toString()).isEqualTo("0.00");
     }
 
     @Test
     public void shouldCorrectlyRoundHalfGoalHandicap() throws Exception {
         Bet bet = getBet("-0.75");
         QuarterGoalCalculator calculator = new QuarterGoalCalculator(bet);
-        assertThat(calculator.roundHalfGoalHandicap(getHandicapRemainder(bet.getHandicap().getValue())).toString()).isEqualTo("-0.50");
+        assertThat(calculator.roundHalfGoalHandicap(bet.getHandicap().getRemainder()).getValue().toString()).isEqualTo("-0.50");
 
         bet = getBet("-0.25");
         calculator = new QuarterGoalCalculator(bet);
-        assertThat(calculator.roundHalfGoalHandicap(getHandicapRemainder(bet.getHandicap().getValue())).toString()).isEqualTo("-0.50");
+        assertThat(calculator.roundHalfGoalHandicap(bet.getHandicap().getRemainder()).getValue().toString()).isEqualTo("-0.50");
 
         bet = getBet("0.75");
         calculator = new QuarterGoalCalculator(bet);
-        assertThat(calculator.roundHalfGoalHandicap(getHandicapRemainder(bet.getHandicap().getValue())).toString()).isEqualTo("0.50");
+        assertThat(calculator.roundHalfGoalHandicap(bet.getHandicap().getRemainder()).getValue().toString()).isEqualTo("0.50");
 
         bet = getBet("0.25");
         calculator = new QuarterGoalCalculator(bet);
-        assertThat(calculator.roundHalfGoalHandicap(getHandicapRemainder(bet.getHandicap().getValue())).toString()).isEqualTo("0.50");
+        assertThat(calculator.roundHalfGoalHandicap(bet.getHandicap().getRemainder()).getValue().toString()).isEqualTo("0.50");
     }
 
     private Outcome calculateBetWithTeamAndScore(String handicap, Team backedTeam, Score score) throws Exception {
@@ -117,9 +117,5 @@ public class QuarterGoalCalculatorTest {
                 new Stake("100.00"),
                 new Score(1, 0)
         );
-    }
-
-    private BigDecimal getHandicapRemainder(BigDecimal handicap) {
-        return handicap.remainder(BigDecimal.ONE);
     }
 }
