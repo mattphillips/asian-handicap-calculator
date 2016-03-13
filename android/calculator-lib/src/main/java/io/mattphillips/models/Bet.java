@@ -42,4 +42,14 @@ public class Bet {
     public Score getScoreline() {
         return scoreline;
     }
+
+    @Override
+    public String toString() {
+        return "{Team = " + team
+                + ", Odds = " + odds
+                + ", Handicap = " + handicap
+                + ", Stake = " + stake
+                + ", Score = " + scoreline
+                +"}";
+    }
 }

@@ -25,4 +25,9 @@ public class Outcome {
     public BigDecimal getProfit() {
         return profit;
     }
+
+    @Override
+    public String toString() {
+        return "{Result = " +  result + ", Payout = " + payout + ", Profit = " + profit + "}";
+    }
 }

@@ -18,4 +18,9 @@ public class Score {
         return away;
     }
 
+    @Override
+    public String toString() {
+        return "{ Home = " + home + ", Away = " + away + "}";
+    }
+
 }
