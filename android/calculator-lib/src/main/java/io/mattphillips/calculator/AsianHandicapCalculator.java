@@ -3,6 +3,7 @@ package io.mattphillips.calculator;
 import java.math.BigDecimal;
 
 import io.mattphillips.models.Bet;
+import io.mattphillips.models.Outcome;
 
 public abstract class AsianHandicapCalculator {
 
@@ -15,10 +16,10 @@ public abstract class AsianHandicapCalculator {
         String rem = bet.getHandicap().remainder(BigDecimal.ONE).toString();
 
         if (rem.equals("0.00"))
-            return new FullGoalCalculator();
+            return new FullGoalCalculator(bet);
 
         else if (rem.equals("0.50"))
-            return new HalfGoalCalculator();
+            return new HalfGoalCalculator(bet);
 
         else if (rem.equals("0.25") || rem.equals(("0.75")))
             return new QuarterGoalCalculator();
@@ -26,4 +27,6 @@ public abstract class AsianHandicapCalculator {
         else
             throw new Exception("Unrecognised bet type of: " + rem);
     }
+
+    public abstract Outcome calculate();
 }
