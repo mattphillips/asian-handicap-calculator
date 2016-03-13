@@ -10,14 +10,21 @@ import io.mattphillips.models.microtypes.Handicap;
 
 public abstract class AsianHandicapCalculator {
 
+    private static final String FULL_GOAL_REMAINDER = "0.00";
+    private static final String HALF_GOAL_REMAINDER = "0.50";
+    private static final String QUARTER_GOAL_LOWER_REMAINDER = "0.25";
+    private static final String QUARTER_GOAL_UPPER_REMAINDER = "0.75";
+
+    private static final String UNRECOGNISED_BET_TYPE_EXCEPTION = "Unrecognised bet type of: %s";
+
     protected final Bet bet;
     protected final BigDecimal goalSupremacy;
 
     public AsianHandicapCalculator(final Bet bet) {
         this.bet = bet;
-        goalSupremacy = bet.getTeam() == Team.HOME ?
-                calculateGoalSupremacy(bet.getScoreline().homeScore(), bet.getScoreline().awayScore()) :
-                calculateGoalSupremacy(bet.getScoreline().awayScore(), bet.getScoreline().homeScore());
+        goalSupremacy = bet.getTeam() == Team.HOME
+                ? calculateGoalSupremacy(bet.getScoreline().homeScore(), bet.getScoreline().awayScore())
+                : calculateGoalSupremacy(bet.getScoreline().awayScore(), bet.getScoreline().homeScore());
     }
 
     // The three types are:
@@ -28,17 +35,17 @@ public abstract class AsianHandicapCalculator {
 
         String rem = bet.getHandicap().getRemainder().toString();
 
-        if (rem.equals("0.00"))
+        if (rem.equals(FULL_GOAL_REMAINDER))
             return new FullGoalCalculator(bet);
 
-        else if (rem.equals("0.50"))
+        else if (rem.equals(HALF_GOAL_REMAINDER))
             return new HalfGoalCalculator(bet);
 
-        else if (rem.equals("0.25") || rem.equals(("0.75")))
+        else if (rem.equals(QUARTER_GOAL_LOWER_REMAINDER) || rem.equals((QUARTER_GOAL_UPPER_REMAINDER)))
             return new QuarterGoalCalculator(bet);
 
         else
-            throw new Exception("Unrecognised bet type of: " + rem);
+            throw new Exception(String.format(UNRECOGNISED_BET_TYPE_EXCEPTION, rem));
     }
 
     public abstract Outcome calculate();
