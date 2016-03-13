@@ -4,8 +4,19 @@ import java.math.BigDecimal;
 
 import io.mattphillips.models.Bet;
 import io.mattphillips.models.Outcome;
+import io.mattphillips.models.Team;
 
 public abstract class AsianHandicapCalculator {
+
+    protected final Bet bet;
+    protected final BigDecimal goalSupremacy;
+
+    public AsianHandicapCalculator(final Bet bet) {
+        this.bet = bet;
+        goalSupremacy = bet.getTeam() == Team.HOME ?
+                calculateGoalSupremacy(bet.getScoreline().homeScore(), bet.getScoreline().awayScore()) :
+                calculateGoalSupremacy(bet.getScoreline().awayScore(), bet.getScoreline().homeScore());
+    }
 
     // The three types are:
     // Full Goal +-(1.00, 2.00, 3.00, 4.00)
@@ -22,11 +33,15 @@ public abstract class AsianHandicapCalculator {
             return new HalfGoalCalculator(bet);
 
         else if (rem.equals("0.25") || rem.equals(("0.75")))
-            return new QuarterGoalCalculator();
+            return new QuarterGoalCalculator(bet);
 
         else
             throw new Exception("Unrecognised bet type of: " + rem);
     }
 
     public abstract Outcome calculate();
+
+    protected BigDecimal calculateGoalSupremacy(int backedTeam, int opposingTeam) {
+        return new BigDecimal(backedTeam).subtract(new BigDecimal(opposingTeam));
+    }
 }

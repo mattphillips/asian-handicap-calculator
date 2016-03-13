@@ -11,26 +11,16 @@ import io.mattphillips.models.Team;
 
 public class FullGoalCalculator extends AsianHandicapCalculator {
 
-    private final Bet bet;
-
     public FullGoalCalculator(final Bet bet) {
-        this.bet = bet;
+        super(bet);
     }
 
     public Outcome calculate() {
-        BigDecimal goalSupremacy = bet.getTeam() == Team.HOME ?
-                calculateGoalSupremacy(bet.getScoreline().homeScore(), bet.getScoreline().awayScore()) :
-                calculateGoalSupremacy(bet.getScoreline().awayScore(), bet.getScoreline().homeScore());
-
         Result result = determineResult(goalSupremacy, bet.getHandicap());
-        BigDecimal payout = determinePayout(result, bet);
+        BigDecimal payout = determinePayout(result);
         BigDecimal profit = payout.subtract(bet.getStake());
 
         return new Outcome(result, payout, profit);
-    }
-
-    private BigDecimal calculateGoalSupremacy(int backedTeam, int opposingTeam) {
-        return new BigDecimal(backedTeam).subtract(new BigDecimal(opposingTeam));
     }
 
     private Result determineResult(BigDecimal goalSupremacy, BigDecimal handicap) {
@@ -42,7 +32,7 @@ public class FullGoalCalculator extends AsianHandicapCalculator {
             return Result.DRAW;
     }
 
-    private BigDecimal determinePayout(Result result, Bet bet) {
+    private BigDecimal determinePayout(Result result) {
         if (result == Result.WIN)
             return bet.getStake().multiply(bet.getOdds()).setScale(2, 0);
         else if (result == Result.DRAW)
