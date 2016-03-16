@@ -122,16 +122,13 @@
         <Button
             android:id="@+id/calculate"
             android:text="@string/button.calculate"
-            style="@style/Button"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            style="@style/LeftButton"
             />
 
         <Button
             android:id="@+id/reset"
             android:text="@string/button.reset"
             style="@style/Button"
-            android:layout_marginRight="5dp"
             />
     </LinearLayout>
 </LinearLayout>
