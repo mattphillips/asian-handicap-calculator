@@ -98,6 +98,12 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         return v;
     }
 
+    @Override
+    public void onResume() {
+        determineScorelineVisibility();
+        super.onResume();
+    }
+
     private void bindSpinnerToData(Spinner spinner, int arrayResource) {
         spinner.setAdapter(getAdapter(arrayResource));
         spinner.getBackground()
@@ -119,6 +125,10 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
 
     @OnClick({R.id.finalScore, R.id.allScenarios})
     public void radioGroupUpdate() {
+        determineScorelineVisibility();
+    }
+
+    private void determineScorelineVisibility() {
         if (allScenarios.isChecked())
             changeScorelineState(View.INVISIBLE);
 
