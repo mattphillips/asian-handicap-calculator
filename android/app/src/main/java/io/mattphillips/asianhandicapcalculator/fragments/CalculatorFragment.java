@@ -1,4 +1,4 @@
-package io.mattphillips.asianhandicapcalculator;
+package io.mattphillips.asianhandicapcalculator.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -24,6 +24,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.ButterKnife;
 
+import io.mattphillips.asianhandicapcalculator.R;
 import io.mattphillips.calculator.AsianHandicapCalculator;
 import io.mattphillips.models.Bet;
 import io.mattphillips.models.Outcome;

@@ -1,4 +1,4 @@
-package io.mattphillips.asianhandicapcalculator;
+package io.mattphillips.asianhandicapcalculator.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.ButterKnife;
+import io.mattphillips.asianhandicapcalculator.R;
 import io.mattphillips.models.Outcome;
 
 public class OutcomeFragment extends Fragment {
