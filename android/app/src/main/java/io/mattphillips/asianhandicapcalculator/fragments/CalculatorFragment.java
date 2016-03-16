@@ -3,6 +3,8 @@ package io.mattphillips.asianhandicapcalculator.fragments;
 import android.app.Fragment;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,7 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
 
     private static final String OUTCOME_KEY = "outcome";
     private static final String STATE_NAME = "calculator";
+    private static final String NUMBER_INPUT_REGEX = "\\d{0,10}(\\.\\d{0,2})?";
 
     @Checked
     @Bind(R.id.teamSelection)
@@ -95,6 +98,9 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         bindSpinnerToData(homeScore, R.array.array_scores);
         bindSpinnerToData(awayScore, R.array.array_scores);
 
+        addInputRestriction(stakeInput);
+        addInputRestriction(teamOdds);
+
         return v;
     }
 
@@ -121,6 +127,24 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         );
         adapter.setDropDownViewResource(R.layout.spinner_item_list);
         return adapter;
+    }
+
+    private void addInputRestriction(EditText numberInput) {
+        numberInput.setFilters(new InputFilter[] {
+            new InputFilter() {
+                @Override
+                public CharSequence filter(CharSequence source, int start, int end, Spanned destination, int destinationStart, int destinationEnd) {
+                    if (end > start) {
+                        String destinationString = destination.toString();
+                        String resultingTxt = destinationString.substring(0, destinationStart)
+                                + source.subSequence(start, end)
+                                + destinationString.substring(destinationEnd);
+                        return resultingTxt.matches(NUMBER_INPUT_REGEX) ? null : "";
+                    }
+                    return null;
+                }
+            }
+        });
     }
 
     @OnClick({R.id.finalScore, R.id.allScenarios})
