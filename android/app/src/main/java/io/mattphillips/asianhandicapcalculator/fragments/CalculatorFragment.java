@@ -1,6 +1,7 @@
 package io.mattphillips.asianhandicapcalculator.fragments;
 
 import android.app.Fragment;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,44 +41,47 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
     private static final String STATE_NAME = "calculator";
 
     @Checked
-    @Bind(R.id.teamSelection) RadioGroup teamSelection;
+    @Bind(R.id.teamSelection)
+    RadioGroup teamSelection;
 
     @NotEmpty
-    @Bind(R.id.odds) EditText teamOdds;
+    @Bind(R.id.odds)
+    EditText teamOdds;
 
     @NotEmpty
-    @Bind(R.id.stake) EditText stakeInput;
+    @Bind(R.id.stake)
+    EditText stakeInput;
 
     @Select
-    @Bind(R.id.homeScore) Spinner homeScore;
+    @Bind(R.id.homeScore)
+    Spinner homeScore;
 
     @Select
-    @Bind(R.id.awayScore) Spinner awayScore;
+    @Bind(R.id.awayScore)
+    Spinner awayScore;
 
     @Select
-    @Bind(R.id.handicaps) Spinner handicaps;
+    @Bind(R.id.handicaps)
+    Spinner handicaps;
 
-    @Bind(R.id.calculate) Button calculate;
-    @Bind(R.id.reset) Button reset;
+    @Bind(R.id.calculate)
+    Button calculate;
+
+    @Bind(R.id.reset)
+    Button reset;
 
     private Validator validator;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View v =  inflater.inflate(R.layout.fragment_calculator, container, false);
         ButterKnife.bind(this, v);
 
         validator = new Validator(this);
         validator.setValidationListener(this);
 
-        ArrayAdapter<CharSequence> handicapsAdapter = getAdapter(R.array.array_handicaps);
-        handicapsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        handicaps.setAdapter(handicapsAdapter);
-
-        ArrayAdapter<CharSequence> scoresAdapter = getAdapter(R.array.array_scores);
-        scoresAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        homeScore.setAdapter(scoresAdapter);
-        awayScore.setAdapter(scoresAdapter);
+        bindSpinnerToData(handicaps, R.array.array_handicaps);
+        bindSpinnerToData(homeScore, R.array.array_scores);
+        bindSpinnerToData(awayScore, R.array.array_scores);
 
         return v;
     }
@@ -147,11 +151,22 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         }
     }
 
-    private ArrayAdapter<CharSequence> getAdapter(int resource) {
-        return ArrayAdapter.createFromResource(
+    private void bindSpinnerToData(Spinner spinner, int arrayResource) {
+        spinner.setAdapter(getAdapter(arrayResource));
+        spinner.getBackground()
+                .setColorFilter(
+                        getResources().getColor(R.color.colorPrimaryDark),
+                        PorterDuff.Mode.SRC_ATOP
+                );
+    }
+
+    private ArrayAdapter<CharSequence> getAdapter(int arrayResource) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 getActivity(),
-                resource,
-                android.R.layout.simple_spinner_item
+                arrayResource,
+                R.layout.spinner_item
         );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
     }
 }
