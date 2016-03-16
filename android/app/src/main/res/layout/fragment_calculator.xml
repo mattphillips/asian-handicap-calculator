@@ -87,12 +87,14 @@
     </RadioGroup>
 
     <TextView
+        android:id="@+id/scorelineHeader"
         android:text="@string/header.scoreline"
         style="@style/Header"
         android:visibility="invisible"
         />
 
     <LinearLayout
+        android:id="@+id/scoreline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
