@@ -100,19 +100,22 @@
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:visibility="invisible"
+        android:weightSum="2"
         >
         <Spinner
             android:id="@+id/homeScore"
-            android:layout_width="75dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAlignment="center"
+            android:layout_weight="1"
             />
 
         <Spinner
             android:id="@+id/awayScore"
-            android:layout_width="75dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAlignment="center"
+            android:layout_weight="1"
             />
     </LinearLayout>
 
