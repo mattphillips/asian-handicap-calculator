@@ -22,9 +22,6 @@ public class OutcomeFragment extends Fragment {
     @Bind(R.id.payout) TextView payout;
     @Bind(R.id.profit) TextView profit;
 
-    @Bind(R.id.edit) Button edit;
-    @Bind(R.id.reset) Button reset;
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_outcome, container, false);
@@ -47,6 +44,9 @@ public class OutcomeFragment extends Fragment {
 
     @OnClick(R.id.reset)
     public void reset() {
-        getActivity().recreate();
+        getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.content, new CalculatorFragment())
+            .commit();
     }
 }

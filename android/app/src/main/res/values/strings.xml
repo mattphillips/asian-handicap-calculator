@@ -11,14 +11,14 @@
 
     <string name="header.outcome">Outcome</string>
     <string name="header.result">Result</string>
-    <string name="header.payout">Payout</string>
-    <string name="header.profit">Profit</string>
+    <string name="header.payout">Payout (£)</string>
+    <string name="header.profit">Profit (£)</string>
 
 
     <string name="label.home">Home</string>
     <string name="label.away">Away</string>
-    <string name="label.odds">2.5</string>
-    <string name="label.stake">10</string>
+    <string name="label.odds"><i>e.g. 2.5</i></string>
+    <string name="label.stake"><i>e.g. 10</i></string>
 
     <string name="button.calculate">Calculate</string>
     <string name="button.reset">Reset</string>

@@ -1,15 +1,18 @@
 package io.mattphillips.asianhandicapcalculator.fragments;
 
 import android.app.Fragment;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -40,51 +43,110 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
     private static final String STATE_NAME = "calculator";
 
     @Checked
-    @Bind(R.id.teamSelection) RadioGroup teamSelection;
+    @Bind(R.id.teamSelection)
+    RadioGroup teamSelection;
 
     @NotEmpty
-    @Bind(R.id.odds) EditText teamOdds;
+    @Bind(R.id.odds)
+    EditText teamOdds;
 
     @NotEmpty
-    @Bind(R.id.stake) EditText stakeInput;
+    @Bind(R.id.stake)
+    EditText stakeInput;
 
     @Select
-    @Bind(R.id.homeScore) Spinner homeScore;
+    @Bind(R.id.homeScore)
+    Spinner homeScore;
 
     @Select
-    @Bind(R.id.awayScore) Spinner awayScore;
+    @Bind(R.id.awayScore)
+    Spinner awayScore;
 
     @Select
-    @Bind(R.id.handicaps) Spinner handicaps;
+    @Bind(R.id.handicaps)
+    Spinner handicaps;
 
-    @Bind(R.id.calculate) Button calculate;
-    @Bind(R.id.reset) Button reset;
+    @Checked
+    @Bind(R.id.calculationType)
+    RadioGroup calculationType;
+
+    @Bind(R.id.allScenarios)
+    RadioButton allScenarios;
+
+    @Bind(R.id.finalScore)
+    RadioButton finalScore;
+
+    @Bind(R.id.scorelineHeader)
+    TextView scorelineHeader;
+
+    @Bind(R.id.scoreline)
+    LinearLayout scoreline;
 
     private Validator validator;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View v =  inflater.inflate(R.layout.fragment_calculator, container, false);
         ButterKnife.bind(this, v);
 
         validator = new Validator(this);
         validator.setValidationListener(this);
 
-        ArrayAdapter<CharSequence> handicapsAdapter = getAdapter(R.array.array_handicaps);
-        handicapsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        handicaps.setAdapter(handicapsAdapter);
-
-        ArrayAdapter<CharSequence> scoresAdapter = getAdapter(R.array.array_scores);
-        scoresAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        homeScore.setAdapter(scoresAdapter);
-        awayScore.setAdapter(scoresAdapter);
+        bindSpinnerToData(handicaps, R.array.array_handicaps);
+        bindSpinnerToData(homeScore, R.array.array_scores);
+        bindSpinnerToData(awayScore, R.array.array_scores);
 
         return v;
     }
 
+    @Override
+    public void onResume() {
+        determineScorelineVisibility();
+        super.onResume();
+    }
+
+    private void bindSpinnerToData(Spinner spinner, int arrayResource) {
+        spinner.setAdapter(getAdapter(arrayResource));
+        spinner.getBackground()
+                .setColorFilter(
+                        getResources().getColor(R.color.colorSecondary),
+                        PorterDuff.Mode.SRC_ATOP
+                );
+    }
+
+    private ArrayAdapter<CharSequence> getAdapter(int arrayResource) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getActivity(),
+                arrayResource,
+                R.layout.spinner_item
+        );
+        adapter.setDropDownViewResource(R.layout.spinner_item_list);
+        return adapter;
+    }
+
+    @OnClick({R.id.finalScore, R.id.allScenarios})
+    public void radioGroupUpdate() {
+        determineScorelineVisibility();
+    }
+
+    private void determineScorelineVisibility() {
+        if (allScenarios.isChecked())
+            changeScorelineState(View.INVISIBLE);
+
+        if(finalScore.isChecked())
+            changeScorelineState(View.VISIBLE);
+    }
+
+    private void changeScorelineState(int visibility) {
+        scoreline.setVisibility(visibility);
+        scorelineHeader.setVisibility(visibility);
+    }
+
     @OnClick(R.id.reset)
     public void reset(View view) {
-        getActivity().recreate();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, new CalculatorFragment())
+                .commit();
     }
 
     @OnClick(R.id.calculate)
@@ -94,22 +156,9 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
 
     @Override
     public void onValidationSucceeded() {
-        int selectedTeam = teamSelection.getCheckedRadioButtonId();
-        Team team = selectedTeam == R.id.homeTeam ? Team.HOME : Team.AWAY;
-        Odds odds = new Odds(teamOdds.getText().toString());
-        Handicap handicap = new Handicap(handicaps.getSelectedItem().toString());
-        Stake stake = new Stake(stakeInput.getText().toString());
-
-        Score score = new Score(
-                Integer.parseInt(homeScore.getSelectedItem().toString()),
-                Integer.parseInt(awayScore.getSelectedItem().toString())
-        );
-
-        Bet bet = new Bet(team, odds, handicap, stake, score);
 
         try {
-
-            AsianHandicapCalculator calculator = AsianHandicapCalculator.determineBetType(bet);
+            AsianHandicapCalculator calculator = AsianHandicapCalculator.determineBetType(extractBet());
             Outcome outcome = calculator.calculate();
 
             Bundle bundle = new Bundle();
@@ -129,6 +178,21 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         }
     }
 
+    private Bet extractBet() {
+        int selectedTeam = teamSelection.getCheckedRadioButtonId();
+        Team team = selectedTeam == R.id.homeTeam ? Team.HOME : Team.AWAY;
+        Odds odds = new Odds(teamOdds.getText().toString());
+        Handicap handicap = new Handicap(handicaps.getSelectedItem().toString());
+        Stake stake = new Stake(stakeInput.getText().toString());
+
+        Score score = new Score(
+                Integer.parseInt(homeScore.getSelectedItem().toString()),
+                Integer.parseInt(awayScore.getSelectedItem().toString())
+        );
+
+        return new Bet(team, odds, handicap, stake, score);
+    }
+
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
@@ -145,13 +209,5 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
                 Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private ArrayAdapter<CharSequence> getAdapter(int resource) {
-        return ArrayAdapter.createFromResource(
-                getActivity(),
-                resource,
-                android.R.layout.simple_spinner_item
-        );
     }
 }
