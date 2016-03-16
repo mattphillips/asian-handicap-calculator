@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -64,11 +66,21 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
     @Bind(R.id.handicaps)
     Spinner handicaps;
 
-    @Bind(R.id.calculate)
-    Button calculate;
+    @Checked
+    @Bind(R.id.calculationType)
+    RadioGroup calculationType;
 
-    @Bind(R.id.reset)
-    Button reset;
+    @Bind(R.id.allScenarios)
+    RadioButton allScenarios;
+
+    @Bind(R.id.finalScore)
+    RadioButton finalScore;
+
+    @Bind(R.id.scorelineHeader)
+    TextView scorelineHeader;
+
+    @Bind(R.id.scoreline)
+    LinearLayout scoreline;
 
     private Validator validator;
 
@@ -84,71 +96,6 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         bindSpinnerToData(awayScore, R.array.array_scores);
 
         return v;
-    }
-
-    @OnClick(R.id.reset)
-    public void reset(View view) {
-        getActivity().recreate();
-    }
-
-    @OnClick(R.id.calculate)
-    public void calculate(View view) {
-        validator.validate();
-    }
-
-    @Override
-    public void onValidationSucceeded() {
-        int selectedTeam = teamSelection.getCheckedRadioButtonId();
-        Team team = selectedTeam == R.id.homeTeam ? Team.HOME : Team.AWAY;
-        Odds odds = new Odds(teamOdds.getText().toString());
-        Handicap handicap = new Handicap(handicaps.getSelectedItem().toString());
-        Stake stake = new Stake(stakeInput.getText().toString());
-
-        Score score = new Score(
-                Integer.parseInt(homeScore.getSelectedItem().toString()),
-                Integer.parseInt(awayScore.getSelectedItem().toString())
-        );
-
-        Bet bet = new Bet(team, odds, handicap, stake, score);
-
-        try {
-
-            AsianHandicapCalculator calculator = AsianHandicapCalculator.determineBetType(bet);
-            Outcome outcome = calculator.calculate();
-
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(OUTCOME_KEY, outcome);
-
-            Fragment outcomeFragment = new OutcomeFragment();
-            outcomeFragment.setArguments(bundle);
-
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content, outcomeFragment)
-                    .addToBackStack(STATE_NAME)
-                    .commit();
-
-        } catch (Exception e) {
-
-        }
-    }
-
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(getActivity().getApplicationContext());
-
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-//                view.setBackgroundColor(Color.RED);
-//                int labelView = view.getLabelFor();
-//                TextView v = (TextView) getActivity().findViewById(labelView);
-//                v.setError("");
-                Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     private void bindSpinnerToData(Spinner spinner, int arrayResource) {
@@ -168,5 +115,86 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         );
         adapter.setDropDownViewResource(R.layout.spinner_item_list);
         return adapter;
+    }
+
+    @OnClick({R.id.finalScore, R.id.allScenarios})
+    public void radioGroupUpdate() {
+        if (allScenarios.isChecked())
+            changeScorelineState(View.INVISIBLE);
+
+        if(finalScore.isChecked())
+            changeScorelineState(View.VISIBLE);
+    }
+
+    private void changeScorelineState(int visibility) {
+        scoreline.setVisibility(visibility);
+        scorelineHeader.setVisibility(visibility);
+    }
+
+    @OnClick(R.id.reset)
+    public void reset(View view) {
+        getActivity().recreate();
+    }
+
+    @OnClick(R.id.calculate)
+    public void calculate(View view) {
+        validator.validate();
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+
+        try {
+            AsianHandicapCalculator calculator = AsianHandicapCalculator.determineBetType(extractBet());
+            Outcome outcome = calculator.calculate();
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(OUTCOME_KEY, outcome);
+
+            Fragment outcomeFragment = new OutcomeFragment();
+            outcomeFragment.setArguments(bundle);
+
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content, outcomeFragment)
+                    .addToBackStack(STATE_NAME)
+                    .commit();
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    private Bet extractBet() {
+        int selectedTeam = teamSelection.getCheckedRadioButtonId();
+        Team team = selectedTeam == R.id.homeTeam ? Team.HOME : Team.AWAY;
+        Odds odds = new Odds(teamOdds.getText().toString());
+        Handicap handicap = new Handicap(handicaps.getSelectedItem().toString());
+        Stake stake = new Stake(stakeInput.getText().toString());
+
+        Score score = new Score(
+                Integer.parseInt(homeScore.getSelectedItem().toString()),
+                Integer.parseInt(awayScore.getSelectedItem().toString())
+        );
+
+        return new Bet(team, odds, handicap, stake, score);
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(getActivity().getApplicationContext());
+
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+//                view.setBackgroundColor(Color.RED);
+//                int labelView = view.getLabelFor();
+//                TextView v = (TextView) getActivity().findViewById(labelView);
+//                v.setError("");
+                Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
