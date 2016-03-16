@@ -143,7 +143,10 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
 
     @OnClick(R.id.reset)
     public void reset(View view) {
-        getActivity().recreate();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, new CalculatorFragment())
+                .commit();
     }
 
     @OnClick(R.id.calculate)
