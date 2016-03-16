@@ -1,10 +1,15 @@
 package io.mattphillips.asianhandicapcalculator;
 
 import android.app.FragmentManager;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import io.mattphillips.asianhandicapcalculator.fragments.CalculatorFragment;
+import io.mattphillips.asianhandicapcalculator.fragments.SplashScreenFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -14,7 +19,10 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, new CalculatorFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content, new SplashScreenFragment()).commit();
+//        fragmentManager.beginTransaction().replace(R.id.content, new CalculatorFragment()).commit();
+
+
     }
 
     @Override
