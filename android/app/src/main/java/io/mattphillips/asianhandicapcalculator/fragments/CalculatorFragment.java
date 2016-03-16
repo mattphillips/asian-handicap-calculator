@@ -155,7 +155,7 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         spinner.setAdapter(getAdapter(arrayResource));
         spinner.getBackground()
                 .setColorFilter(
-                        getResources().getColor(R.color.colorPrimaryDark),
+                        getResources().getColor(R.color.colorSecondary),
                         PorterDuff.Mode.SRC_ATOP
                 );
     }
@@ -166,7 +166,7 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
                 arrayResource,
                 R.layout.spinner_item
         );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item_list);
         return adapter;
     }
 }

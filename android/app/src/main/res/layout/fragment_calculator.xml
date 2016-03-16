@@ -5,162 +5,131 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/header.team_selection"
+        style="@style/Header"
         />
 
     <RadioGroup
         android:id="@+id/teamSelection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        style="@style/RadioGroup"
         >
-
         <RadioButton
             android:id="@+id/homeTeam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/label.home"
-            android:layout_gravity="center_horizontal"
+            style="@style/RadioButton"
             />
 
         <RadioButton
             android:id="@+id/awayTeam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/label.away"
-            android:layout_gravity="center_horizontal"
+            style="@style/RadioButton"
             />
-
     </RadioGroup>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/header.team_odds"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/Header"
         />
 
     <EditText
         android:id="@+id/odds"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:hint="@string/label.odds"
-        android:inputType="numberDecimal"
-        android:ems="10"
+        android:textAlignment="center"
+        style="@style/NumberInput"
         />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/header.handicap"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/Header"
         />
 
     <Spinner
         android:id="@+id/handicaps"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
         />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/header.stake"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/Header"
         />
 
     <EditText
         android:id="@+id/stake"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:inputType="numberDecimal"
-        android:ems="10"
         android:hint="@string/label.stake"
+        android:textAlignment="center"
+        style="@style/NumberInput"
         />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/header.calculation_type"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/Header"
         />
 
     <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:id="@+id/calculationType"
+        style="@style/RadioGroup"
+        >
         <RadioButton
             android:id="@+id/finalScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Final Score"
+            style="@style/RadioButton"
             />
 
         <RadioButton
             android:id="@+id/allScenarios"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="All scenarios"
+            style="@style/RadioButton"
             />
-
     </RadioGroup>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/header.scoreline"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/Header"
+        android:visibility="invisible"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:visibility="invisible"
         >
-
         <Spinner
             android:id="@+id/homeScore"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             />
 
         <Spinner
             android:id="@+id/awayScore"
-            android:layout_width="match_parent"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             />
-
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        style="@style/ButtonGroup"
         >
-
         <Button
             android:id="@+id/calculate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/button.calculate"
+            style="@style/Button"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             />
 
         <Button
             android:id="@+id/reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/button.reset"
+            style="@style/Button"
+            android:layout_marginRight="5dp"
             />
-
     </LinearLayout>
-
 </LinearLayout>
