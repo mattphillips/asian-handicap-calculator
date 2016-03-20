@@ -8,8 +8,8 @@ public class Handicap extends Decimal {
         super(handicap);
     }
 
-    public Handicap(final BigDecimal hanicap) {
-        super(hanicap);
+    public Handicap(final BigDecimal handicap) {
+        super(handicap);
     }
 
     public BigDecimal getRemainder() {

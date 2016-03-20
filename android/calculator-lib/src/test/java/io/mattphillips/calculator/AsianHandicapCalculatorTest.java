@@ -30,7 +30,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCreateQuarterGoalCalculatoFromBet() throws Exception {
+    public void shouldCreateQuarterGoalCalculatorFromBet() throws Exception {
         AsianHandicapCalculator calc =
                 AsianHandicapCalculator.determineBetType(getBetWithHandicap("1.25"));
         assertThat(calc).isInstanceOf(QuarterGoalCalculator.class);
