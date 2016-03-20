@@ -17,7 +17,12 @@ public class AsianHandicapCalculatorTest {
     public void shouldCreateFullGoalAsianHandicapCalculatorFromBet() throws Exception {
         AsianHandicapCalculator calc =
                 AsianHandicapCalculator.determineBetType(getBetWithHandicap("1.00"));
+        assertThat(calc).isInstanceOf(FullGoalCalculator.class);
 
+        calc = AsianHandicapCalculator.determineBetType(getBetWithHandicap("-1.00"));
+        assertThat(calc).isInstanceOf(FullGoalCalculator.class);
+
+        calc = AsianHandicapCalculator.determineBetType(getBetWithHandicap("0.00"));
         assertThat(calc).isInstanceOf(FullGoalCalculator.class);
     }
 
@@ -25,17 +30,25 @@ public class AsianHandicapCalculatorTest {
     public void shouldCreateHalfGoalCalculatorFromBet() throws Exception {
         AsianHandicapCalculator calc =
                 AsianHandicapCalculator.determineBetType(getBetWithHandicap("1.50"));
+        assertThat(calc).isInstanceOf(HalfGoalCalculator.class);
 
+        calc = AsianHandicapCalculator.determineBetType(getBetWithHandicap("-1.50"));
         assertThat(calc).isInstanceOf(HalfGoalCalculator.class);
     }
 
     @Test
-    public void shouldCreateQuarterGoalCalculatoFromBet() throws Exception {
+    public void shouldCreateQuarterGoalCalculatorFromBet() throws Exception {
         AsianHandicapCalculator calc =
                 AsianHandicapCalculator.determineBetType(getBetWithHandicap("1.25"));
         assertThat(calc).isInstanceOf(QuarterGoalCalculator.class);
 
         calc = AsianHandicapCalculator.determineBetType(getBetWithHandicap("1.75"));
+        assertThat(calc).isInstanceOf(QuarterGoalCalculator.class);
+
+        calc = AsianHandicapCalculator.determineBetType(getBetWithHandicap("-1.25"));
+        assertThat(calc).isInstanceOf(QuarterGoalCalculator.class);
+
+        calc = AsianHandicapCalculator.determineBetType(getBetWithHandicap("-1.75"));
         assertThat(calc).isInstanceOf(QuarterGoalCalculator.class);
     }
 

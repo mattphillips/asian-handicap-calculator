@@ -33,7 +33,7 @@ public abstract class AsianHandicapCalculator {
     // Quarter Goal +-(1.25, 1.75, 2.25, 2.75, 3.25, 3.75, 4.25, 4.75)
     public static AsianHandicapCalculator determineBetType(Bet bet) throws Exception {
 
-        String rem = bet.getHandicap().getRemainder().toString();
+        String rem = bet.getHandicap().getRemainder().abs().toString();
 
         if (rem.equals(FULL_GOAL_REMAINDER))
             return new FullGoalCalculator(bet);
