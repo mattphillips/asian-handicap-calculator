@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,9 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
     private static final String STATE_NAME = "calculator";
     private static final String NUMBER_INPUT_REGEX = "\\d{0,10}(\\.\\d{0,2})?";
 
+    private static final int MIN_SCORE = 0;
+    private static final int MAX_SCORE = 9;
+
     @Checked
     @Bind(R.id.teamSelection)
     RadioGroup teamSelection;
@@ -57,13 +62,11 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
     @Bind(R.id.stake)
     EditText stakeInput;
 
-    @Select
     @Bind(R.id.homeScore)
-    Spinner homeScore;
+    NumberPicker homeScore;
 
-    @Select
     @Bind(R.id.awayScore)
-    Spinner awayScore;
+    NumberPicker awayScore;
 
     @Select
     @Bind(R.id.handicaps)
@@ -85,6 +88,9 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
     @Bind(R.id.scoreline)
     LinearLayout scoreline;
 
+    @Bind(R.id.topContent)
+    ScrollView scrollView;
+
     private Validator validator;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,11 +101,12 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         validator.setValidationListener(this);
 
         bindSpinnerToData(handicaps, R.array.array_handicaps);
-        bindSpinnerToData(homeScore, R.array.array_scores);
-        bindSpinnerToData(awayScore, R.array.array_scores);
 
         addInputRestriction(stakeInput);
         addInputRestriction(teamOdds);
+
+        setScorePickerBounds(homeScore);
+        setScorePickerBounds(awayScore);
 
         return v;
     }
@@ -129,21 +136,26 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         return adapter;
     }
 
+    private void setScorePickerBounds(NumberPicker picker) {
+        picker.setMinValue(MIN_SCORE);
+        picker.setMaxValue(MAX_SCORE);
+    }
+
     private void addInputRestriction(EditText numberInput) {
-        numberInput.setFilters(new InputFilter[] {
-            new InputFilter() {
-                @Override
-                public CharSequence filter(CharSequence source, int start, int end, Spanned destination, int destinationStart, int destinationEnd) {
-                    if (end > start) {
-                        String destinationString = destination.toString();
-                        String resultingTxt = destinationString.substring(0, destinationStart)
-                                + source.subSequence(start, end)
-                                + destinationString.substring(destinationEnd);
-                        return resultingTxt.matches(NUMBER_INPUT_REGEX) ? null : "";
+        numberInput.setFilters(new InputFilter[]{
+                new InputFilter() {
+                    @Override
+                    public CharSequence filter(CharSequence source, int start, int end, Spanned destination, int destinationStart, int destinationEnd) {
+                        if (end > start) {
+                            String destinationString = destination.toString();
+                            String resultingTxt = destinationString.substring(0, destinationStart)
+                                    + source.subSequence(start, end)
+                                    + destinationString.substring(destinationEnd);
+                            return resultingTxt.matches(NUMBER_INPUT_REGEX) ? null : "";
+                        }
+                        return null;
                     }
-                    return null;
                 }
-            }
         });
     }
 
@@ -154,10 +166,17 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
 
     private void determineScorelineVisibility() {
         if (allScenarios.isChecked())
-            changeScorelineState(View.INVISIBLE);
+            changeScorelineState(View.GONE);
 
-        if(finalScore.isChecked())
+        if(finalScore.isChecked()) {
             changeScorelineState(View.VISIBLE);
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.fullScroll(View.FOCUS_DOWN);
+                }
+            });
+        }
     }
 
     private void changeScorelineState(int visibility) {
@@ -209,10 +228,7 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         Handicap handicap = new Handicap(handicaps.getSelectedItem().toString());
         Stake stake = new Stake(stakeInput.getText().toString());
 
-        Score score = new Score(
-                Integer.parseInt(homeScore.getSelectedItem().toString()),
-                Integer.parseInt(awayScore.getSelectedItem().toString())
-        );
+        Score score = new Score(homeScore.getValue(), awayScore.getValue());
 
         return new Bet(team, odds, handicap, stake, score);
     }
