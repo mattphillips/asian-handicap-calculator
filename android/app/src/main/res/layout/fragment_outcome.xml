@@ -1,64 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <TextView
-        android:text="@string/header.outcome"
-        style="@style/Header"
-        />
-
-    <TextView
-        android:text="@string/header.result"
-        style="@style/Header"
-        />
-
-    <TextView
-        android:id="@+id/result"
-        android:fontFamily="sans-serif-thin"
-        style="@style/Outomce"
-        />
-
-    <TextView
-        android:text="@string/header.payout"
-        style="@style/Header"
-        />
-
-    <TextView
-        android:id="@+id/payout"
-        android:fontFamily="sans-serif-thin"
-        style="@style/Outomce"
-        />
-
-    <TextView
-        android:text="@string/header.profit"
-        style="@style/Header"
-        />
-
-    <TextView
-        android:id="@+id/profit"
-        android:fontFamily="sans-serif-thin"
-        style="@style/Outomce"
-        />
-
     <LinearLayout
-        android:layout_marginTop="225dp"
-        style="@style/ButtonGroup"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
-        <Button
-            android:id="@+id/edit"
-            android:text="@string/button.edit"
-            style="@style/LeftButton"
+
+        <TextView
+            android:text="@string/header.outcome"
+            style="@style/Header"
             />
 
-        <Button
-            android:id="@+id/reset"
-            android:text="@string/button.reset"
-            style="@style/Button"
+        <TextView
+            android:text="@string/header.result"
+            style="@style/Header"
             />
+
+        <TextView
+            android:id="@+id/result"
+            android:fontFamily="sans-serif-thin"
+            style="@style/Outomce"
+            />
+
+        <TextView
+            android:text="@string/header.payout"
+            style="@style/Header"
+            />
+
+        <TextView
+            android:id="@+id/payout"
+            android:fontFamily="sans-serif-thin"
+            style="@style/Outomce"
+            />
+
+        <TextView
+            android:text="@string/header.profit"
+            style="@style/Header"
+            />
+
+        <TextView
+            android:id="@+id/profit"
+            android:fontFamily="sans-serif-thin"
+            style="@style/Outomce"
+            />
+
     </LinearLayout>
+    <LinearLayout
+    style="@style/ButtonGroup"
+        >
+    <Button
+        android:id="@+id/edit"
+        android:text="@string/button.edit"
+        style="@style/LeftButton"
+        />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/reset"
+        android:text="@string/button.reset"
+        style="@style/Button"
+        />
+    </LinearLayout>
+</RelativeLayout>
