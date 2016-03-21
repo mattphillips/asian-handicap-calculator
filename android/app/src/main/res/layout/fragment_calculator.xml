@@ -50,38 +50,14 @@
             style="@style/Header"
             />
 
-<<<<<<< Updated upstream
-    <LinearLayout
-        android:id="@+id/scoreline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:visibility="invisible"
-        android:weightSum="2"
-        >
-        <Spinner
-            android:id="@+id/homeScore"
-            android:layout_width="0dp"
-=======
         <Spinner
             android:id="@+id/handicaps"
             android:layout_width="wrap_content"
->>>>>>> Stashed changes
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textAlignment="center"
-            android:layout_weight="1"
             />
 
-<<<<<<< Updated upstream
-        <Spinner
-            android:id="@+id/awayScore"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_weight="1"
-=======
         <TextView
             android:text="@string/header.stake"
             style="@style/Header"
@@ -92,7 +68,6 @@
             android:hint="@string/label.stake"
             android:textAlignment="center"
             style="@style/NumberInput"
->>>>>>> Stashed changes
             />
 
         <TextView
