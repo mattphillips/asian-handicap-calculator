@@ -32,6 +32,7 @@ import butterknife.OnClick;
 import butterknife.ButterKnife;
 
 import io.mattphillips.asianhandicapcalculator.R;
+import io.mattphillips.asianhandicapcalculator.models.OutcomeParcel;
 import io.mattphillips.calculator.AsianHandicapCalculator;
 import io.mattphillips.models.Bet;
 import io.mattphillips.models.Outcome;
@@ -205,7 +206,7 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
             Outcome outcome = calculator.calculate();
 
             Bundle bundle = new Bundle();
-            bundle.putSerializable(OUTCOME_KEY, outcome);
+            bundle.putParcelable(OUTCOME_KEY, new OutcomeParcel(outcome));
 
             Fragment outcomeFragment = new OutcomeFragment();
             outcomeFragment.setArguments(bundle);
