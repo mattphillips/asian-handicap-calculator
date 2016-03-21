@@ -1,12 +1,9 @@
 package io.mattphillips.models;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
 import io.mattphillips.models.microtypes.Payout;
 import io.mattphillips.models.microtypes.Profit;
 
-public class Outcome implements Serializable {
+public class Outcome {
 
     private final Result result;
     private final Payout payout;

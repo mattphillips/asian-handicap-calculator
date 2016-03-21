@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.ButterKnife;
 import io.mattphillips.asianhandicapcalculator.R;
-import io.mattphillips.models.Outcome;
+import io.mattphillips.asianhandicapcalculator.models.OutcomeParcel;
 
 public class OutcomeFragment extends Fragment {
 
@@ -28,11 +27,11 @@ public class OutcomeFragment extends Fragment {
         ButterKnife.bind(this, v);
 
         Bundle args = getArguments();
-        Outcome outcome = (Outcome) args.getSerializable(OUTCOME_KEY);
+        OutcomeParcel outcome = (OutcomeParcel) args.getParcelable(OUTCOME_KEY);
 
-        result.setText(outcome.getResult().toString());
-        payout.setText(outcome.getPayout().getValue().toString());
-        profit.setText(outcome.getProfit().getValue().toString());
+        result.setText(outcome.getResult());
+        payout.setText(outcome.getPayout());
+        profit.setText(outcome.getProfit());
 
         return v;
     }
