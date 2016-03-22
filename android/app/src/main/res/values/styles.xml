@@ -9,6 +9,9 @@
         <item name="android:textColor">@color/colorSecondary</item>
         <item name="android:textColorPrimary">@color/colorSecondary</item>
         <item name="android:textColorHint">@color/colorAccentDark</item>
+    </style>
+
+    <style name="Fragment">
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
