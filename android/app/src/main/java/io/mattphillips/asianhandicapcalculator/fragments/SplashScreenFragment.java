@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ public class SplashScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_splashscreen, container, false);
         ButterKnife.bind(this, v);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         authorLogo.setBackgroundResource(R.drawable.animation_logo);
 

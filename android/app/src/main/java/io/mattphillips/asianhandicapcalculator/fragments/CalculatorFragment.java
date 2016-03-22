@@ -3,6 +3,8 @@ package io.mattphillips.asianhandicapcalculator.fragments;
 import android.app.Fragment;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -97,6 +99,8 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_calculator, container, false);
         ButterKnife.bind(this, v);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
         validator = new Validator(this);
         validator.setValidationListener(this);

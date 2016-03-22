@@ -1,28 +1,26 @@
 package io.mattphillips.asianhandicapcalculator;
 
 import android.app.FragmentManager;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import io.mattphillips.asianhandicapcalculator.fragments.CalculatorFragment;
 import io.mattphillips.asianhandicapcalculator.fragments.SplashScreenFragment;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, new SplashScreenFragment()).commit();
-//        fragmentManager.beginTransaction().replace(R.id.content, new CalculatorFragment()).commit();
-
-
     }
 
     @Override
