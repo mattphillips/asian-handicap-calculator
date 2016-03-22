@@ -39,8 +39,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/button_margin</item>
-        <item name="android:layout_marginBottom">@dimen/button_margin</item>
+        <item name="android:paddingBottom">@dimen/button_margin</item>
         <item name="android:weightSum">2</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="NumberInput.Picker.Container">
