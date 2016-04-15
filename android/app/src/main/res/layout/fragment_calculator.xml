@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/Fragment"
+    >
+    <ScrollView
+        android:id="@+id/topContent"
+        android:layout_alignParentTop="true"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:text="@string/header.team_selection"
+                style="@style/Header"
+                />
+
+            <RadioGroup
+                android:id="@+id/teamSelection"
+                style="@style/RadioGroup"
+                >
+                <RadioButton
+                    android:id="@+id/homeTeam"
+                    android:text="@string/label.home"
+                    style="@style/RadioButton"
+                    />
+
+                <RadioButton
+                    android:id="@+id/awayTeam"
+                    android:text="@string/label.away"
+                    style="@style/RadioButton"
+                    />
+            </RadioGroup>
+
+            <TextView
+                android:text="@string/header.team_odds"
+                style="@style/Header"
+                />
+
+            <EditText
+                android:id="@+id/odds"
+                android:hint="@string/label.odds"
+                android:textAlignment="center"
+                style="@style/NumberInput"
+                />
+
+            <TextView
+                android:text="@string/header.handicap"
+                style="@style/Header"
+                />
+
+            <Spinner
+                android:id="@+id/handicaps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                />
+
+            <TextView
+                android:text="@string/header.stake"
+                style="@style/Header"
+                />
+
+            <EditText
+                android:id="@+id/stake"
+                android:hint="@string/label.stake"
+                android:textAlignment="center"
+                style="@style/NumberInput"
+                />
+
+            <TextView
+                android:text="@string/header.calculation_type"
+                style="@style/Header"
+                />
+
+            <RadioGroup
+                android:id="@+id/calculationType"
+                style="@style/RadioGroup"
+                >
+                <RadioButton
+                    android:id="@+id/finalScore"
+                    android:text="Final Score"
+                    style="@style/RadioButton"
+                    />
+
+                <RadioButton
+                    android:id="@+id/allScenarios"
+                    android:text="All scenarios"
+                    style="@style/RadioButton"
+                    />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/scorelineHeader"
+                android:text="@string/header.scoreline"
+                style="@style/Header"
+                android:visibility="invisible"
+                />
+
+            <LinearLayout
+                android:id="@+id/scoreline"
+                style="@style/NumberInput.Picker.Container"
+                >
+                <NumberPicker
+                    android:id="@+id/homeScore"
+                    style="@style/NumberInput.Picker.Left"
+                    />
+
+                <NumberPicker
+                    android:id="@+id/awayScore"
+                    style="@style/NumberInput.Picker"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        style="@style/ButtonGroup"
+        >
+        <Button
+            android:id="@+id/calculate"
+            android:text="@string/button.calculate"
+            style="@style/LeftButton"
+            />
+
+        <Button
+            android:id="@+id/reset"
+            android:text="@string/button.reset"
+            style="@style/Button"
+            />
+    </LinearLayout>
+</RelativeLayout>
