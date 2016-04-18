@@ -2,6 +2,8 @@
     <string name="app_name">Asian Handicap Calculator</string>
     <string name="action_settings">Settings</string>
 
+    <string name="author">mattphillips.io</string>
+
     <string name="header.team_selection">Your team selection</string>
     <string name="header.team_odds">Team odds (decimal)</string>
     <string name="header.handicap">Handicap</string>
