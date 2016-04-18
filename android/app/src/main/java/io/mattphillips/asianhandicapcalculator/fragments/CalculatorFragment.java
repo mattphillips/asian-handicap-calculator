@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -126,7 +125,7 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         spinner.setAdapter(getAdapter(arrayResource));
         spinner.getBackground()
                 .setColorFilter(
-                        getResources().getColor(R.color.colorSecondary),
+                        getResources().getColor(R.color.colorPrimary),
                         PorterDuff.Mode.SRC_ATOP
                 );
     }
@@ -173,7 +172,7 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         if (allScenarios.isChecked())
             changeScorelineState(View.GONE);
 
-        if(finalScore.isChecked()) {
+        if (finalScore.isChecked()) {
             changeScorelineState(View.VISIBLE);
             scrollView.post(new Runnable() {
                 @Override
