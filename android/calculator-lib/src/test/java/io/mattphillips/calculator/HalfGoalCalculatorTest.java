@@ -78,8 +78,8 @@ public class HalfGoalCalculatorTest {
     public void shouldCalculatePayoutAndProfitCorrectly() throws Exception {
         Outcome winOutcome = calculateBetWithTeamAndScore("0.50", HOME, new Score(0, 0));
         assertThat(winOutcome.getResult()).isEqualTo(WIN);
-        assertThat(winOutcome.getPayout().getValue().toString()).isEqualTo("200.00");
-        assertThat(winOutcome.getProfit().getValue().toString()).isEqualTo("100.00");
+        assertThat(winOutcome.getPayout().getValue().toString()).isEqualTo("300.00");
+        assertThat(winOutcome.getProfit().getValue().toString()).isEqualTo("200.00");
 
         Outcome loseOutcome = calculateBetWithTeamAndScore("0.50", HOME, new Score(0, 1));
         assertThat(loseOutcome.getResult()).isEqualTo(LOSE);

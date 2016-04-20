@@ -14,7 +14,7 @@ public class PayoutTest {
         Stake stake = new Stake("100.00");
         Odds odds = new Odds("2.50");
 
-        assertThat(Payout.determinePayout(r, stake, odds).getValue().toString()).isEqualTo("250.00");
+        assertThat(Payout.determinePayout(r, stake, odds).getValue().toString()).isEqualTo("350.00");
     }
 
     @Test

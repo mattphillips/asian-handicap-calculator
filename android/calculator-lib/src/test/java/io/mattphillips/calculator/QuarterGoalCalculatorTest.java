@@ -23,8 +23,8 @@ public class QuarterGoalCalculatorTest {
     public void shouldDetermineOutcomeAsWinWhenBothFullGoalAndHalfGoalBetsAreWinners() throws Exception {
         Outcome outcome = calculateBetWithTeamAndScore("0.25", HOME, new Score(1, 0));
         assertThat(outcome.getResult()).isEqualTo(WIN);
-        assertThat(outcome.getPayout().getValue().toString()).isEqualTo("200.00");
-        assertThat(outcome.getProfit().getValue().toString()).isEqualTo("100.00");
+        assertThat(outcome.getPayout().getValue().toString()).isEqualTo("300.00");
+        assertThat(outcome.getProfit().getValue().toString()).isEqualTo("200.00");
 
         assertThat(calculateBetWithTeamAndScore("0.75", HOME, new Score(0, 0)).getResult()).isEqualTo(WIN);
         assertThat(calculateBetWithTeamAndScore("-0.25", HOME, new Score(1, 0)).getResult()).isEqualTo(WIN);
@@ -57,8 +57,8 @@ public class QuarterGoalCalculatorTest {
     public void shouldDetermineOutcomeAsWinWhenFullGoalBetDrawsAndHalfGoalBetWins() throws Exception {
         Outcome outcome = calculateBetWithTeamAndScore("0.25", HOME, new Score(0, 0));
         assertThat(outcome.getResult()).isEqualTo(WIN);
-        assertThat(outcome.getPayout().getValue().toString()).isEqualTo("150.00");
-        assertThat(outcome.getProfit().getValue().toString()).isEqualTo("50.00");
+        assertThat(outcome.getPayout().getValue().toString()).isEqualTo("200.00");
+        assertThat(outcome.getProfit().getValue().toString()).isEqualTo("100.00");
 
         assertThat(calculateBetWithTeamAndScore("-0.75", HOME, new Score(1, 0)).getResult()).isEqualTo(WIN);
     }

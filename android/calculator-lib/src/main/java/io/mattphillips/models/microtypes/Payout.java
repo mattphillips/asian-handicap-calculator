@@ -16,7 +16,7 @@ public class Payout extends Decimal {
 
     public static Payout determinePayout(Result result, Stake stake, Odds odds) {
         if (result == Result.WIN)
-            return new Payout(stake.getValue().multiply(odds.getValue()));
+            return new Payout(stake.getValue().multiply(odds.getValue()).add(stake.getValue()));
 
         else if (result == Result.DRAW)
             return new Payout(stake.getValue());
