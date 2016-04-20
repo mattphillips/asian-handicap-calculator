@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorSecondary">#FFFFFF</color>
     <color name="colorAccentDark">#a1a1a1</color>
+    <color name="colorWin">#b3ff75</color>
+    <color name="colorDraw">#fffb90</color>
+    <color name="colorLose">#ff8c8c</color>
 </resources>
