@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 
 public class Profit extends Decimal {
 
+    public Profit(final String profit) {
+        super(new BigDecimal(profit));
+    }
+
     public Profit(final BigDecimal profit) {
         super(profit);
     }
