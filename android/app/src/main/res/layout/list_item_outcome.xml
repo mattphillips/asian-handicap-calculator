@@ -3,44 +3,54 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentTop="true"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:weightSum="3"
+    >
 
-    <TextView
-        style="@style/Header"
-        android:text="@string/header.outcome"
-        />
+    <LinearLayout
+        android:layout_weight="1.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            style="@style/Header.Outcome"
+            android:text="@string/header.result"
+            />
 
-    <TextView
-        style="@style/Header"
-        android:text="@string/header.result"
-        />
+        <TextView
+            style="@style/Header.Outcome"
+            android:text="@string/header.payout"
+            />
 
-    <TextView
-        android:id="@+id/result"
-        style="@style/Outomce"
-        android:fontFamily="sans-serif-thin"
-        />
+        <TextView
+            style="@style/Header.Outcome"
+            android:text="@string/header.profit"
+            />
+    </LinearLayout>
 
-    <TextView
-        style="@style/Header"
-        android:text="@string/header.payout"
-        />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/result"
+            style="@style/Outcome"
+            android:fontFamily="sans-serif-thin"
+            />
 
-    <TextView
-        android:id="@+id/payout"
-        style="@style/Outomce"
-        android:fontFamily="sans-serif-thin"
-        />
+        <TextView
+            android:id="@+id/payout"
+            style="@style/Outcome"
+            android:fontFamily="sans-serif-thin"
+            />
 
-    <TextView
-        style="@style/Header"
-        android:text="@string/header.profit"
-        />
-
-    <TextView
-        android:id="@+id/profit"
-        style="@style/Outomce"
-        android:fontFamily="sans-serif-thin"
-        />
+        <TextView
+            android:id="@+id/profit"
+            style="@style/Outcome"
+            android:fontFamily="sans-serif-thin"
+            />
+    </LinearLayout>
 </LinearLayout>

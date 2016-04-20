@@ -6,9 +6,16 @@
     style="@style/Fragment"
     >
 
+    <TextView
+        android:id="@+id/outcomeHeader"
+        android:layout_alignParentTop="true"
+        style="@style/Header"
+        android:text="@string/header.outcome"
+        />
+
     <ListView
         android:id="@+id/outcomes"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/outcomeHeader"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
