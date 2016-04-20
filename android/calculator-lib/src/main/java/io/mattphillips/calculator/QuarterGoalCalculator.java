@@ -82,7 +82,8 @@ public class QuarterGoalCalculator extends AsianHandicapCalculator {
         return new Outcome(
                 determineResultFromOutcomeProfits(profit),
                 sumPayout(fullGoal.getPayout(), halfGoal.getPayout()),
-                profit
+                profit,
+                this.bet
         );
     }
 

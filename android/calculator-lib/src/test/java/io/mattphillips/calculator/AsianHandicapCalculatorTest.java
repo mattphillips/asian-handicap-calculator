@@ -68,9 +68,9 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("+2.00"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.DRAW, new Payout("10"), new Profit("0")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.DRAW, new Payout("10"), new Profit("0"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -78,9 +78,9 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("-2.00"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.DRAW, new Payout("10"), new Profit("0")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.DRAW, new Payout("10"), new Profit("0"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -88,9 +88,9 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("+2.00"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.DRAW, new Payout("10"), new Profit("0")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.DRAW, new Payout("10"), new Profit("0"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -98,9 +98,9 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("-2.00"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.DRAW, new Payout("10"), new Profit("0")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.DRAW, new Payout("10"), new Profit("0"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -108,8 +108,8 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("+2.50"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(2);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -117,8 +117,8 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("-2.50"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(2);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -126,8 +126,8 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("+2.50"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(2);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -135,8 +135,8 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("-2.50"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(2);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -145,16 +145,16 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("+2.75"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("5"), new Profit("-5")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("5"), new Profit("-5"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
         // half win
         bet = new Bet(Team.HOME, new Odds("2"), new Handicap("+2.25"), new Stake("10"), null);
         outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("15"), new Profit("5")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("15"), new Profit("5"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -163,16 +163,16 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("-2.75"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("15"), new Profit("5")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("15"), new Profit("5"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
         // half lose
         bet = new Bet(Team.HOME, new Odds("2"), new Handicap("-2.25"), new Stake("10"), null);
         outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("5"), new Profit("-5")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("5"), new Profit("-5"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -181,16 +181,16 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("+2.75"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("5"), new Profit("-5")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("5"), new Profit("-5"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
         // half win
         bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("+2.25"), new Stake("10"), null);
         outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("15"), new Profit("5")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("15"), new Profit("5"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     @Test
@@ -199,16 +199,16 @@ public class AsianHandicapCalculatorTest {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("-2.75"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("15"), new Profit("5")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("15"), new Profit("5"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
         // half lose
         bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("-2.25"), new Stake("10"), null);
         outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
-        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("5"), new Profit("-5")));
-        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10")));
+        assertThat(outcomes).contains(new Outcome(Result.WIN, new Payout("20"), new Profit("10"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("5"), new Profit("-5"), bet));
+        assertThat(outcomes).contains(new Outcome(Result.LOSE, new Payout("0"), new Profit("-10"), bet));
     }
 
     private Bet getBetWithHandicap(String handicap) {

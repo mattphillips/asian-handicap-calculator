@@ -8,11 +8,13 @@ public class Outcome {
     private final Result result;
     private final Payout payout;
     private final Profit profit;
+    private final Bet bet;
 
-    public Outcome(final Result result, final Payout payout, final Profit profit) {
+    public Outcome(Result result, Payout payout, Profit profit, Bet bet) {
         this.result = result;
         this.payout = payout;
         this.profit = profit;
+        this.bet = bet;
     }
 
     public Result getResult() {
@@ -25,6 +27,10 @@ public class Outcome {
 
     public Profit getProfit() {
         return profit;
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 
     @Override

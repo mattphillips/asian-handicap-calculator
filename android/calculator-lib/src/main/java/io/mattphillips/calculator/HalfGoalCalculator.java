@@ -17,6 +17,6 @@ public class HalfGoalCalculator extends AsianHandicapCalculator {
         Payout payout = Payout.determinePayout(result, bet.getStake(), bet.getOdds());
         Profit profit = Profit.calculateProfit(payout, bet.getStake());
 
-        return new Outcome(result, payout, profit);
+        return new Outcome(result, payout, profit, bet);
     }
 }
