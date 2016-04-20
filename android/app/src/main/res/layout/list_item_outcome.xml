@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/Header"
+        android:text="@string/header.outcome"
+        />
+
+    <TextView
+        style="@style/Header"
+        android:text="@string/header.result"
+        />
+
+    <TextView
+        android:id="@+id/result"
+        style="@style/Outomce"
+        android:fontFamily="sans-serif-thin"
+        />
+
+    <TextView
+        style="@style/Header"
+        android:text="@string/header.payout"
+        />
+
+    <TextView
+        android:id="@+id/payout"
+        style="@style/Outomce"
+        android:fontFamily="sans-serif-thin"
+        />
+
+    <TextView
+        style="@style/Header"
+        android:text="@string/header.profit"
+        />
+
+    <TextView
+        android:id="@+id/profit"
+        style="@style/Outomce"
+        android:fontFamily="sans-serif-thin"
+        />
+</LinearLayout>
