@@ -1,6 +1,10 @@
 package io.mattphillips.calculator;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.Arrays;
+import java.util.List;
 
 import io.mattphillips.models.Bet;
 import io.mattphillips.models.Outcome;
@@ -15,7 +19,7 @@ public class QuarterGoalCalculator extends AsianHandicapCalculator {
     private static final BigDecimal QUARTER_HANDICAP_OFFSET = new BigDecimal(0.25);
     private static final BigDecimal HALF = new BigDecimal(2.00);
 
-    public QuarterGoalCalculator(final Bet bet) {
+    QuarterGoalCalculator(final Bet bet) {
         super(bet);
     }
 
@@ -24,6 +28,40 @@ public class QuarterGoalCalculator extends AsianHandicapCalculator {
         Outcome halfGoal = new HalfGoalCalculator(buildHalfGoalBet()).calculate();
 
         return combineOutcomes(fullGoal, halfGoal);
+    }
+
+    public static List<Bet> buildQuarterGoalAllScenariosBets(Bet bet) {
+        Handicap handicap = bet.getHandicap();
+
+        if (isHomeBackedBet(bet) || isAwayLaidBet(bet)) {
+            return Arrays.asList(
+                bet.adjustScore(0, roundHandicapDown(handicap)),
+                bet.adjustScore(0, roundHandicapUp(handicap)),
+                bet.adjustScore(0, roundAboveBelow(handicap))
+            );
+        } else {
+            return Arrays.asList(
+                bet.adjustScore(roundAboveBelow(handicap), 0),
+                bet.adjustScore(roundHandicapUp(handicap), 0),
+                bet.adjustScore(roundHandicapDown(handicap), 0)
+            );
+        }
+    }
+
+    private static int roundAboveBelow(Handicap handicap) {
+        if (handicap.getRemainder().abs().equals(new BigDecimal("0.25"))) {
+            return roundHandicapDown(handicap) - 1;
+        } else {
+            return roundHandicapUp(handicap) + 1;
+        }
+    }
+
+    private static int roundHandicapUp(Handicap handicap) {
+        return handicap.getValue().abs().round(new MathContext(1, RoundingMode.UP)).intValueExact();
+    }
+
+    private static int roundHandicapDown(Handicap handicap) {
+        return handicap.getValue().abs().round(new MathContext(1, RoundingMode.DOWN)).intValueExact();
     }
 
     private Bet buildFullGoalBet() {
@@ -77,6 +115,7 @@ public class QuarterGoalCalculator extends AsianHandicapCalculator {
     }
 
     private Outcome combineOutcomes(Outcome fullGoal, Outcome halfGoal) {
+        // TODO: this shouldn't be combined but should be two seperate slots in the array
         Profit profit = sumProfit(fullGoal.getProfit(), halfGoal.getProfit());
         return new Outcome(
                 determineResultFromOutcomeProfits(profit),

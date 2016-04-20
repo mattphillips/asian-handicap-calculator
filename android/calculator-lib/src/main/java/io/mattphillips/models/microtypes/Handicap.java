@@ -15,4 +15,12 @@ public class Handicap extends Decimal {
     public BigDecimal getRemainder() {
         return value.remainder(BigDecimal.ONE);
     }
+
+    public boolean isBackedHandicap() {
+        return getValue().signum() == 1;
+    }
+
+    public boolean isLaidHandicap() {
+        return getValue().signum() == -1;
+    }
 }

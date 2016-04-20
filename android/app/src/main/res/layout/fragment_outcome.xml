@@ -5,64 +5,29 @@
     android:layout_height="match_parent"
     style="@style/Fragment"
     >
-    <LinearLayout
+
+    <ListView
+        android:id="@+id/outcomes"
         android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        >
-        <TextView
-            android:text="@string/header.outcome"
-            style="@style/Header"
-            />
-
-        <TextView
-            android:text="@string/header.result"
-            style="@style/Header"
-            />
-
-        <TextView
-            android:id="@+id/result"
-            android:fontFamily="sans-serif-thin"
-            style="@style/Outomce"
-            />
-
-        <TextView
-            android:text="@string/header.payout"
-            style="@style/Header"
-            />
-
-        <TextView
-            android:id="@+id/payout"
-            android:fontFamily="sans-serif-thin"
-            style="@style/Outomce"
-            />
-
-        <TextView
-            android:text="@string/header.profit"
-            style="@style/Header"
-            />
-
-        <TextView
-            android:id="@+id/profit"
-            android:fontFamily="sans-serif-thin"
-            style="@style/Outomce"
-            />
-    </LinearLayout>
+        android:fillViewport="true"
+        android:layout_marginBottom="100dp"
+    />
 
     <LinearLayout
-    style="@style/ButtonGroup"
+        style="@style/ButtonGroup"
         >
-    <Button
-        android:id="@+id/edit"
-        android:text="@string/button.edit"
-        style="@style/LeftButton"
+        <Button
+            android:id="@+id/edit"
+            android:text="@string/button.edit"
+            style="@style/LeftButton"
         />
 
-    <Button
-        android:id="@+id/reset"
-        android:text="@string/button.reset"
-        style="@style/Button"
+        <Button
+            android:id="@+id/reset"
+            android:text="@string/button.reset"
+            style="@style/Button"
         />
     </LinearLayout>
 </RelativeLayout>

@@ -1,19 +1,15 @@
 package io.mattphillips.calculator;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.mattphillips.models.Bet;
 import io.mattphillips.models.Outcome;
 import io.mattphillips.models.Result;
-import io.mattphillips.models.Team;
 import io.mattphillips.models.microtypes.Handicap;
 
 public abstract class AsianHandicapCalculator {
-
-    private static final String FULL_GOAL_REMAINDER = "0.00";
-    private static final String HALF_GOAL_REMAINDER = "0.50";
-    private static final String QUARTER_GOAL_LOWER_REMAINDER = "0.25";
-    private static final String QUARTER_GOAL_UPPER_REMAINDER = "0.75";
 
     private static final String UNRECOGNISED_BET_TYPE_EXCEPTION = "Unrecognised bet type of: %s";
 
@@ -22,7 +18,7 @@ public abstract class AsianHandicapCalculator {
 
     public AsianHandicapCalculator(final Bet bet) {
         this.bet = bet;
-        goalSupremacy = bet.getTeam() == Team.HOME
+        goalSupremacy = bet.getTeam().isHome()
                 ? calculateGoalSupremacy(bet.getScoreline().homeScore(), bet.getScoreline().awayScore())
                 : calculateGoalSupremacy(bet.getScoreline().awayScore(), bet.getScoreline().homeScore());
     }
@@ -31,21 +27,52 @@ public abstract class AsianHandicapCalculator {
     // Full Goal +-(1.00, 2.00, 3.00, 4.00)
     // Half Goal +-(1.50, 2.50, 3.50, 4.50)
     // Quarter Goal +-(1.25, 1.75, 2.25, 2.75, 3.25, 3.75, 4.25, 4.75)
-    public static AsianHandicapCalculator determineBetType(Bet bet) throws Exception {
-
-        String rem = bet.getHandicap().getRemainder().abs().toString();
-
-        if (rem.equals(FULL_GOAL_REMAINDER))
+    public static AsianHandicapCalculator determineFinalScoreBetType(Bet bet) throws Exception {
+        if (bet.isFullGoalBet())
             return new FullGoalCalculator(bet);
 
-        else if (rem.equals(HALF_GOAL_REMAINDER))
+        else if (bet.isHalfGoalBet())
             return new HalfGoalCalculator(bet);
 
-        else if (rem.equals(QUARTER_GOAL_LOWER_REMAINDER) || rem.equals((QUARTER_GOAL_UPPER_REMAINDER)))
+        else if (bet.isQuarterGoalBet())
             return new QuarterGoalCalculator(bet);
 
         else
-            throw new Exception(String.format(UNRECOGNISED_BET_TYPE_EXCEPTION, rem));
+            throw new Exception(String.format(
+                    UNRECOGNISED_BET_TYPE_EXCEPTION,
+                    bet.getHandicap().getRemainder().abs().toString())
+            );
+    }
+
+    public static List<Outcome> calculateAllScenarios(Bet bet) {
+
+        List<Bet> allScenarios = buildAllScenarioBets(bet);
+        List<Outcome> outcomes = new ArrayList<>();
+
+        for (Bet b : allScenarios) {
+            try {
+                Outcome outcome = AsianHandicapCalculator.determineFinalScoreBetType(b).calculate();
+                outcomes.add(outcome);
+            } catch (Exception e) {}
+        }
+        return outcomes;
+    }
+
+    private static List<Bet> buildAllScenarioBets(Bet bet) {
+        if (bet.isFullGoalBet())
+            return FullGoalCalculator.buildFullGoalAllScenariosBets(bet);
+        else if (bet.isHalfGoalBet())
+            return HalfGoalCalculator.buildHalfGoalAllScenariosBets(bet);
+        else
+            return QuarterGoalCalculator.buildQuarterGoalAllScenariosBets(bet);
+    }
+
+    protected static boolean isHomeBackedBet(Bet bet) {
+        return bet.getTeam().isHome() && bet.getHandicap().isBackedHandicap();
+    }
+
+    protected static boolean isAwayLaidBet(Bet bet) {
+        return bet.getTeam().isAway() && bet.getHandicap().isLaidHandicap();
     }
 
     public abstract Outcome calculate();
