@@ -1,6 +1,7 @@
 package io.mattphillips.asianhandicapcalculator.fragments;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,12 +22,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.Checked;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Select;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,66 +40,46 @@ import io.mattphillips.models.microtypes.Handicap;
 import io.mattphillips.models.microtypes.Odds;
 import io.mattphillips.models.microtypes.Stake;
 
-public class CalculatorFragment extends Fragment implements Validator.ValidationListener {
+public class CalculatorFragment extends Fragment {
 
     private static final String OUTCOME_KEY = "outcome";
+    private static final String OUTCOMES_KEY = "outcomes";
     private static final String STATE_NAME = "calculator";
     private static final String NUMBER_INPUT_REGEX = "\\d{0,10}(\\.\\d{0,2})?";
 
     private static final int MIN_SCORE = 0;
     private static final int MAX_SCORE = 9;
+    public static final String VALIDATION_ERROR_MESSAGE = "Woops something's not quite right :(";
+    public static final String EMPTY_EDIT_TEXT_ERROR = "Please provide value";
 
-    @Checked
-    @Bind(R.id.teamSelection)
-    RadioGroup teamSelection;
+    @Bind(R.id.teamSelection) RadioGroup teamSelection;
+    @Bind(R.id.calculationType) RadioGroup calculationType;
 
-    @NotEmpty
-    @Bind(R.id.odds)
-    EditText teamOdds;
+    @Bind(R.id.teamSelectionLabel) TextView teamSelectionLabel;
+    @Bind(R.id.odds) EditText teamOdds;
 
-    @NotEmpty
-    @Bind(R.id.stake)
-    EditText stakeInput;
+    @Bind(R.id.stake) EditText stakeInput;
+    @Bind(R.id.homeScore) NumberPicker homeScore;
 
-    @Bind(R.id.homeScore)
-    NumberPicker homeScore;
+    @Bind(R.id.awayScore) NumberPicker awayScore;
 
-    @Bind(R.id.awayScore)
-    NumberPicker awayScore;
+    @Bind(R.id.handicaps) Spinner handicaps;
 
-    @Select
-    @Bind(R.id.handicaps)
-    Spinner handicaps;
+    @Bind (R.id.calculationTypeLabel) TextView calculationTypeLabel;
 
-    @Checked
-    @Bind(R.id.calculationType)
-    RadioGroup calculationType;
+    @Bind(R.id.allScenarios) RadioButton allScenarios;
+    @Bind(R.id.finalScore) RadioButton finalScore;
 
-    @Bind(R.id.allScenarios)
-    RadioButton allScenarios;
+    @Bind(R.id.scorelineHeader) TextView scorelineHeader;
 
-    @Bind(R.id.finalScore)
-    RadioButton finalScore;
-
-    @Bind(R.id.scorelineHeader)
-    TextView scorelineHeader;
-
-    @Bind(R.id.scoreline)
-    LinearLayout scoreline;
-
-    @Bind(R.id.topContent)
-    ScrollView scrollView;
-
-    private Validator validator;
+    @Bind(R.id.scoreline) LinearLayout scoreline;
+    @Bind(R.id.topContent) ScrollView scrollView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_calculator, container, false);
         ButterKnife.bind(this, v);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-
-        validator = new Validator(this);
-        validator.setValidationListener(this);
 
         bindSpinnerToData(handicaps, R.array.array_handicaps);
 
@@ -113,7 +88,6 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
 
         setScorePickerBounds(homeScore);
         setScorePickerBounds(awayScore);
-
         return v;
     }
 
@@ -200,28 +174,54 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
 
     @OnClick(R.id.calculate)
     public void calculate(View view) {
-        validator.validate();
+        if (validate()) {
+            try {
+                Bundle bundle = calculateOutcome(extractBet());
+                Fragment outcomeFragment = new OutcomeFragment();
+                outcomeFragment.setArguments(bundle);
+
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content, outcomeFragment)
+                        .addToBackStack(STATE_NAME)
+                        .commit();
+            } catch (Exception e) {
+                Log.e("Exception", e.getMessage());
+            }
+        } else {
+            alertError();
+        }
     }
 
-    @Override
-    public void onValidationSucceeded() {
-
-        try {
-
-            Bundle bundle = calculateOutcome(extractBet());
-
-            Fragment outcomeFragment = new OutcomeFragment();
-            outcomeFragment.setArguments(bundle);
-
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content, outcomeFragment)
-                    .addToBackStack(STATE_NAME)
-                    .commit();
-
-        } catch (Exception e) {
-            Log.e("Exception", e.getMessage());
+    private boolean validate() {
+        if (teamSelection.getCheckedRadioButtonId() == -1) {
+            teamSelectionLabel.setTextColor(Color.RED);
+            return false;
+        } else {
+            teamSelectionLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
         }
+
+        if (teamOdds.getText().toString().trim().length() == 0) {
+            teamOdds.setError("Please provide value");
+            return false;
+        }
+
+        if (stakeInput.getText().toString().trim().length() == 0) {
+            stakeInput.setError(EMPTY_EDIT_TEXT_ERROR);
+            return false;
+        }
+
+        if (calculationType.getCheckedRadioButtonId() == -1) {
+            calculationTypeLabel.setTextColor(Color.RED);
+            return false;
+        } else {
+            calculationTypeLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }
+        return true;
+    }
+
+    private void alertError() {
+        Toast.makeText(this.getActivity(), VALIDATION_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
     }
 
     private Bundle calculateOutcome(Bet bet) throws Exception {
@@ -237,7 +237,7 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
             for (Outcome o : outcomes) {
                 outcomeParcels.add(new OutcomeParcel(o));
             }
-            bundle.putParcelableArrayList("outcomes", outcomeParcels);
+            bundle.putParcelableArrayList(OUTCOMES_KEY, outcomeParcels);
         }
         return bundle;
     }
@@ -252,23 +252,5 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
         Score score = new Score(homeScore.getValue(), awayScore.getValue());
 
         return new Bet(team, odds, handicap, stake, score);
-    }
-
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(getActivity().getApplicationContext());
-
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-//                view.setBackgroundColor(Color.RED);
-//                int labelView = view.getLabelFor();
-//                TextView v = (TextView) getActivity().findViewById(labelView);
-//                v.setError("");
-                Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 }
