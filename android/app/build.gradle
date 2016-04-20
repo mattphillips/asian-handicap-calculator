@@ -36,12 +36,7 @@ dependencies {
             fileTree(dir: 'libs', include: ['*.jar']),
             'com.android.support:appcompat-v7:23.1.0',
             'com.android.support:design:23.1.0',
-            'org.roboguice:roboguice:3.+',
-            'com.jakewharton:butterknife:7.0.1',
-            'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
-
-
-    provided 'org.roboguice:roboblender:3.+'
+            'com.jakewharton:butterknife:7.0.1'
 
     testCompile 'junit:junit:4.12'
 }
