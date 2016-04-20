@@ -1,5 +1,8 @@
 package io.mattphillips.builder;
 
+import android.util.Log;
+
+import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Arrays;
@@ -32,10 +35,12 @@ public class HalfGoalAllScenariosBetBuilder extends AllScenariosBetBuilder {
     }
 
     private int getAboveHandicapScore(Handicap handicap) {
-        return handicap.getValue().abs().round(new MathContext(1, RoundingMode.UP)).intValueExact();
+        BigDecimal scaledHandicap = scaleHandicapUp(handicap);
+        return scaledHandicap.abs().round(new MathContext(1, RoundingMode.CEILING)).intValueExact();
     }
 
     private int getBelowHandicapScore(Handicap handicap) {
-        return handicap.getValue().abs().round(new MathContext(1, RoundingMode.DOWN)).intValueExact();
+        BigDecimal scaledHandicap = scaleHandicapDown(handicap);
+        return scaledHandicap.abs().round(new MathContext(1, RoundingMode.DOWN)).intValueExact();
     }
 }
