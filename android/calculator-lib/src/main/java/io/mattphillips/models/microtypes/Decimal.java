@@ -29,4 +29,20 @@ public abstract class Decimal {
     public String toString() {
         return "{" + this.getClass().toString() + ": value = " + value + "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Decimal decimal = (Decimal) o;
+
+        return !(value != null ? !value.equals(decimal.value) : decimal.value != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return value != null ? value.hashCode() : 0;
+    }
 }
