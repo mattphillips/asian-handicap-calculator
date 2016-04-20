@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -205,11 +207,8 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
     public void onValidationSucceeded() {
 
         try {
-            AsianHandicapCalculator calculator = AsianHandicapCalculator.determineBetType(extractBet());
-            Outcome outcome = calculator.calculate();
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(OUTCOME_KEY, new OutcomeParcel(outcome));
+            Bundle bundle = calculateOutcome(extractBet());
 
             Fragment outcomeFragment = new OutcomeFragment();
             outcomeFragment.setArguments(bundle);
@@ -221,8 +220,26 @@ public class CalculatorFragment extends Fragment implements Validator.Validation
                     .commit();
 
         } catch (Exception e) {
-
+            Log.e("Exception", e.getMessage());
         }
+    }
+
+    private Bundle calculateOutcome(Bet bet) throws Exception {
+        Bundle bundle = new Bundle();
+        if (finalScore.isChecked()) {
+            AsianHandicapCalculator calculator = AsianHandicapCalculator.determineFinalScoreBetType(bet);
+            Outcome outcome = calculator.calculate();
+
+            bundle.putParcelable(OUTCOME_KEY, new OutcomeParcel(outcome));
+        } else {
+            List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
+            ArrayList<OutcomeParcel> outcomeParcels = new ArrayList<>();
+            for (Outcome o : outcomes) {
+                outcomeParcels.add(new OutcomeParcel(o));
+            }
+            bundle.putParcelableArrayList("outcomes", outcomeParcels);
+        }
+        return bundle;
     }
 
     private Bet extractBet() {
