@@ -64,7 +64,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForFullGoalHomeBackedHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForFullGoalHomeBackedHandicap() throws Exception {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("+2.00"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
@@ -74,7 +74,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForFullGoalHomeLaidHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForFullGoalHomeLaidHandicap() throws Exception {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("-2.00"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
@@ -84,7 +84,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForFullGoalAwayBackedHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForFullGoalAwayBackedHandicap() throws Exception {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("+2.00"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
@@ -94,7 +94,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForFullGoalAwayLaidHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForFullGoalAwayLaidHandicap()  throws Exception {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("-2.00"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(3);
@@ -104,7 +104,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForHalfGoalHomeBackedHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForHalfGoalHomeBackedHandicap()  throws Exception {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("+2.50"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(2);
@@ -113,7 +113,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForHalfGoalHomeLaidHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForHalfGoalHomeLaidHandicap() throws Exception {
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("-2.50"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(2);
@@ -122,7 +122,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForHalfGoalAwayBackedHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForHalfGoalAwayBackedHandicap() throws Exception {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("+2.50"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(2);
@@ -131,7 +131,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForHalfGoalAwayLaidHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForHalfGoalAwayLaidHandicap() throws Exception {
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("-2.50"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
         assertThat(outcomes.size()).isEqualTo(2);
@@ -140,7 +140,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForQuarterGoalHomeBackedHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForQuarterGoalHomeBackedHandicap() throws Exception {
         // half lose
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("+2.75"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
@@ -158,7 +158,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForQuarterGoalHomeLaidHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForQuarterGoalHomeLaidHandicap() throws Exception {
         // half win
         Bet bet = new Bet(Team.HOME, new Odds("2"), new Handicap("-2.75"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
@@ -176,7 +176,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForQuarterGoalAwayBackedHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForQuarterGoalAwayBackedHandicap() throws Exception {
         // half lose
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("+2.75"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);
@@ -194,7 +194,7 @@ public class AsianHandicapCalculatorTest {
     }
 
     @Test
-    public void shouldCorrectlyCalculateOutcomeForQuarterGoalAwayLaidHandicap() {
+    public void shouldCorrectlyCalculateOutcomeForQuarterGoalAwayLaidHandicap() throws Exception {
         // half win
         Bet bet = new Bet(Team.AWAY, new Odds("2"), new Handicap("-2.75"), new Stake("10"), null);
         List<Outcome> outcomes = AsianHandicapCalculator.calculateAllScenarios(bet);

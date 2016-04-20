@@ -45,16 +45,14 @@ public abstract class AsianHandicapCalculator {
             );
     }
 
-    public static List<Outcome> calculateAllScenarios(Bet bet) {
+    public static List<Outcome> calculateAllScenarios(Bet bet) throws Exception {
         AllScenariosBetBuilder builder = AllScenariosBetBuilder.determineBuilderType(bet);
         List<Bet> allScenarios = builder.build();
         List<Outcome> outcomes = new ArrayList<>();
 
         for (Bet b : allScenarios) {
-            try {
-                Outcome outcome = AsianHandicapCalculator.determineFinalScoreBetType(b).calculate();
-                outcomes.add(outcome);
-            } catch (Exception e) {}
+            Outcome outcome = AsianHandicapCalculator.determineFinalScoreBetType(b).calculate();
+            outcomes.add(outcome);
         }
         return outcomes;
     }
