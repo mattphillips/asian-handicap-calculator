@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.mattphillips.builder.AllScenariosBetBuilder;
 import io.mattphillips.models.Bet;
 import io.mattphillips.models.Outcome;
 import io.mattphillips.models.Result;
@@ -45,8 +46,8 @@ public abstract class AsianHandicapCalculator {
     }
 
     public static List<Outcome> calculateAllScenarios(Bet bet) {
-
-        List<Bet> allScenarios = buildAllScenarioBets(bet);
+        AllScenariosBetBuilder builder = AllScenariosBetBuilder.determineBuilderType(bet);
+        List<Bet> allScenarios = builder.build();
         List<Outcome> outcomes = new ArrayList<>();
 
         for (Bet b : allScenarios) {
@@ -56,23 +57,6 @@ public abstract class AsianHandicapCalculator {
             } catch (Exception e) {}
         }
         return outcomes;
-    }
-
-    private static List<Bet> buildAllScenarioBets(Bet bet) {
-        if (bet.isFullGoalBet())
-            return FullGoalCalculator.buildFullGoalAllScenariosBets(bet);
-        else if (bet.isHalfGoalBet())
-            return HalfGoalCalculator.buildHalfGoalAllScenariosBets(bet);
-        else
-            return QuarterGoalCalculator.buildQuarterGoalAllScenariosBets(bet);
-    }
-
-    protected static boolean isHomeBackedBet(Bet bet) {
-        return bet.getTeam().isHome() && bet.getHandicap().isBackedHandicap();
-    }
-
-    protected static boolean isAwayLaidBet(Bet bet) {
-        return bet.getTeam().isAway() && bet.getHandicap().isLaidHandicap();
     }
 
     public abstract Outcome calculate();
