@@ -23,15 +23,6 @@
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
     </style>
 
-    <style name="Header.Outcome">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">left</item>
-        <item name="android:layout_marginTop">@dimen/header_margin</item>
-        <item name="android:layout_marginLeft">@dimen/header_margin</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-    </style>
-
     <style name="Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -52,9 +43,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/button_margin</item>
+        <item name="android:paddingTop">@dimen/button_margin</item>
         <item name="android:paddingBottom">@dimen/button_margin</item>
         <item name="android:weightSum">2</item>
-        <item name="android:background">@color/colorSecondary</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="NumberInput.Picker.Container">
@@ -102,13 +94,7 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
-    <style name="Outcome">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">left</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-        <item name="android:layout_marginTop">@dimen/header_margin</item>
-    </style>
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

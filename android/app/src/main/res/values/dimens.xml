@@ -5,4 +5,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="header_margin">15dp</dimen>
     <dimen name="button_margin">15dp</dimen>
+    <dimen name="outcome_row_margin_top">10dp</dimen>
+    <dimen name="outcome_label_margin_left">20dp</dimen>
+    <dimen name="outcome_row_padding">10dp</dimen>
 </resources>

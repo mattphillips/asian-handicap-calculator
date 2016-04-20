@@ -3,54 +3,126 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="3"
+    android:orientation="vertical"
     >
 
+    <TextView
+        style="@style/OutcomeHeader"
+        android:text="@string/outcome.bet"
+        />
+
     <LinearLayout
-        android:layout_weight="1.5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        style="@style/OutcomeContainer"
         >
-        <TextView
-            style="@style/Header.Outcome"
-            android:text="@string/header.result"
-            />
 
-        <TextView
-            style="@style/Header.Outcome"
-            android:text="@string/header.payout"
-            />
+        <LinearLayout
+            style="@style/OutcomeLabelsContainer"
+            >
 
-        <TextView
-            style="@style/Header.Outcome"
-            android:text="@string/header.profit"
-            />
+            <TextView
+                style="@style/OutcomeLabel"
+                android:text="@string/outcome.team"
+                />
+
+            <TextView
+                style="@style/OutcomeLabel"
+                android:text="@string/outcome.odds"
+                />
+
+            <TextView
+                style="@style/OutcomeLabel"
+                android:text="@string/outcome.handicap"
+                />
+
+            <TextView
+                style="@style/OutcomeLabel"
+                android:text="@string/outcome.stake"
+                />
+
+            <TextView
+                style="@style/OutcomeLabel"
+                android:text="@string/outcome.score"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/OutcomeValuesContainer"
+            >
+
+            <TextView
+                android:id="@+id/team"
+                style="@style/Value"
+                />
+
+            <TextView
+                android:id="@+id/odds"
+                style="@style/Value"
+                />
+
+            <TextView
+                android:id="@+id/handicap"
+                style="@style/Value"
+                />
+
+            <TextView
+                android:id="@+id/stake"
+                style="@style/Value"
+                />
+
+            <TextView
+                android:id="@+id/score"
+                style="@style/Value"
+                />
+        </LinearLayout>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/outcomeHeader"
+        android:text="@string/outcome.header"
+        style="@style/OutcomeHeader"
+        />
+
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:id="@+id/outcomeContainer"
+        style="@style/OutcomeContainer"
         >
-        <TextView
-            android:id="@+id/result"
-            style="@style/Outcome"
-            android:fontFamily="sans-serif-thin"
-            />
+        <LinearLayout
+            style="@style/OutcomeLabelsContainer"
+            >
+            <TextView
+                style="@style/OutcomeLabel"
+                android:text="@string/outcome.result"
+                />
 
-        <TextView
-            android:id="@+id/payout"
-            style="@style/Outcome"
-            android:fontFamily="sans-serif-thin"
-            />
+            <TextView
+                style="@style/OutcomeLabel"
+                android:text="@string/outcome.payout"
+                />
 
-        <TextView
-            android:id="@+id/profit"
-            style="@style/Outcome"
-            android:fontFamily="sans-serif-thin"
-            />
+            <TextView
+                style="@style/OutcomeLabel"
+                android:text="@string/outcome.profit"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/OutcomeValuesContainer"
+            >
+
+            <TextView
+                android:id="@+id/result"
+                style="@style/Value"
+                />
+
+            <TextView
+                android:id="@+id/payout"
+                style="@style/Value"
+                />
+
+            <TextView
+                android:id="@+id/profit"
+                style="@style/Value"
+                />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

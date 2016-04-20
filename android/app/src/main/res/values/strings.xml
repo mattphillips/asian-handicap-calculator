@@ -11,10 +11,16 @@
     <string name="header.calculation_type">Calculation type</string>
     <string name="header.scoreline">Scoreline</string>
 
-    <string name="header.outcome">Outcome</string>
-    <string name="header.result">Result:</string>
-    <string name="header.payout">Payout (£):</string>
-    <string name="header.profit">Profit (£):</string>
+    <string name="outcome.header">Outcome:</string>
+    <string name="outcome.result">Result:</string>
+    <string name="outcome.payout">Payout (£):</string>
+    <string name="outcome.profit">Profit (£):</string>
+    <string name="outcome.bet">Bet:</string>
+    <string name="outcome.team">Team:</string>
+    <string name="outcome.odds">Odds:</string>
+    <string name="outcome.handicap">Handicap:</string>
+    <string name="outcome.stake">Stake (£):</string>
+    <string name="outcome.score">Score:</string>
 
 
     <string name="label.home">Home</string>

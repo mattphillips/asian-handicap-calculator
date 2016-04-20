@@ -1,0 +1,51 @@
+<resources>
+    <style name="Value">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:layout_marginTop">@dimen/outcome_row_margin_top</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="OutcomeHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/outcome_row_padding</item>
+        <item name="android:paddingTop">@dimen/outcome_row_padding</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="OutcomeLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:layout_marginTop">@dimen/outcome_row_margin_top</item>
+        <item name="android:layout_marginLeft">@dimen/outcome_label_margin_left</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="OutcomeLabelsContainer">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1.5</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="OutcomeValuesContainer">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="OutcomeContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:weightSum">3</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingBottom">@dimen/outcome_row_padding</item>
+    </style>
+
+</resources>
