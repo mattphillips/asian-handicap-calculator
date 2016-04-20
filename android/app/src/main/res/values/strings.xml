@@ -4,12 +4,12 @@
 
     <string name="author">mattphillips.io</string>
 
-    <string name="header.team_selection">Your team selection</string>
-    <string name="header.team_odds">Team odds (decimal)</string>
-    <string name="header.handicap">Handicap</string>
-    <string name="header.stake">Stake</string>
-    <string name="header.calculation_type">Calculation type</string>
-    <string name="header.scoreline">Scoreline</string>
+    <string name="header.team_selection">Team selection:</string>
+    <string name="header.team_odds">Team odds (decimal):</string>
+    <string name="header.handicap">Handicap:</string>
+    <string name="header.stake">Stake:</string>
+    <string name="header.calculation_type">Calculation type:</string>
+    <string name="header.scoreline">Scoreline:</string>
 
     <string name="outcome.header">Outcome:</string>
     <string name="outcome.result">Result:</string>
@@ -60,6 +60,7 @@
         <item>+1.00</item>
         <item>+0.75</item>
         <item>+0.50</item>
+        <item>+0.25</item>
         <item>0.00</item>
         <item>-0.25</item>
         <item>-0.50</item>
