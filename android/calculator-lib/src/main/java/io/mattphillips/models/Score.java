@@ -39,7 +39,7 @@ public class Score {
 
     @Override
     public String toString() {
-        return "{ Home = " + home + ", Away = " + away + "}";
+        return home + " - " + away;
     }
 
 }

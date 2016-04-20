@@ -27,7 +27,7 @@ public abstract class Decimal {
 
     @Override
     public String toString() {
-        return "{" + this.getClass().toString() + ": value = " + value + "}";
+        return value.toString();
     }
 
     @Override
