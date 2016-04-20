@@ -21,7 +21,14 @@ public class QuarterGoalAllScenariosBetBuilder extends AllScenariosBetBuilder {
     public List<Bet> build() {
         Handicap handicap = bet.getHandicap();
 
-        if (isHomeBackedBet(bet) || isAwayLaidBet(bet)) {
+        if (isZeroQuarterBet(bet.getHandicap())) {
+            return Arrays.asList(
+                    bet.adjustScore(0, roundHandicapDown(handicap)),
+                    bet.adjustScore(0, roundHandicapUp(handicap)),
+                    bet.adjustScore(roundHandicapUp(handicap), 0)
+            );
+
+        } else if (isHomeBackedBet(bet) || isAwayLaidBet(bet)) {
             return Arrays.asList(
                     bet.adjustScore(0, roundHandicapDown(handicap)),
                     bet.adjustScore(0, roundHandicapUp(handicap)),
@@ -36,6 +43,10 @@ public class QuarterGoalAllScenariosBetBuilder extends AllScenariosBetBuilder {
         }
     }
 
+    private boolean isZeroQuarterBet(Handicap handicap) {
+        return handicap.getValue().abs().equals(new BigDecimal(QUARTER));
+    }
+
     private int roundAboveBelow(Handicap handicap) {
         if (handicap.getRemainder().abs().equals(new BigDecimal(QUARTER))) {
             return roundHandicapDown(handicap) - 1;
@@ -45,10 +56,12 @@ public class QuarterGoalAllScenariosBetBuilder extends AllScenariosBetBuilder {
     }
 
     private int roundHandicapUp(Handicap handicap) {
-        return handicap.getValue().abs().round(new MathContext(1, RoundingMode.UP)).intValueExact();
+        BigDecimal scaledHandicap = scaleHandicapUp(handicap);
+        return scaledHandicap.abs().round(new MathContext(1, RoundingMode.UP)).intValueExact();
     }
 
     private int roundHandicapDown(Handicap handicap) {
-        return handicap.getValue().abs().round(new MathContext(1, RoundingMode.DOWN)).intValueExact();
+        BigDecimal scaledHandicap = scaleHandicapDown(handicap);
+        return scaledHandicap.abs().round(new MathContext(1, RoundingMode.DOWN)).intValueExact();
     }
 }

@@ -1,5 +1,7 @@
 package io.mattphillips.builder;
 
+import android.util.Log;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +19,14 @@ public class FullGoalAllScenariosBetBuilder extends AllScenariosBetBuilder {
     public List<Bet> build() {
         Handicap handicap = bet.getHandicap();
 
-        if (isHomeBackedBet(bet) || isAwayLaidBet(bet)) {
+        if (isLevelBet(bet)) {
+            return Arrays.asList(
+                    bet.adjustScore(getAboveHandicapScore(handicap), 0),
+                    bet.adjustScore(0, getExactHandicapScore(handicap)),
+                    bet.adjustScore(0, getAboveHandicapScore(handicap))
+            );
+
+        } else if (isHomeBackedBet(bet) || isAwayLaidBet(bet)) {
             return Arrays.asList(
                     bet.adjustScore(0, getBelowHandicapScore(handicap)),
                     bet.adjustScore(0, getExactHandicapScore(handicap)),
@@ -30,6 +39,10 @@ public class FullGoalAllScenariosBetBuilder extends AllScenariosBetBuilder {
                     bet.adjustScore(getBelowHandicapScore(handicap), 0)
             );
         }
+    }
+
+    private boolean isLevelBet(Bet bet) {
+        return bet.getHandicap().getValue().signum() == 0;
     }
 
     private int getExactHandicapScore(Handicap handicap) {
